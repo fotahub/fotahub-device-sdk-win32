@@ -1,0 +1,4 @@
+/examples/**/build
+/examples/**/*.exe
+/examples/**/*.info
+/examples/**/*.state
