@@ -25,13 +25,16 @@
 #include <limits.h>
 #include "ctype.h"
 #include <errno.h>
-#include <unistd.h>
 
 static bool isWhitespace(char *str);
 
+static char *separator(void);
+
 static bool createFirmwareUpdateInfoFile(void);
 
-static void openFirmwareUpdateInfoFileInVSCode(void);
+static bool canOpenFirmwareUpdateInfoFile(void);
+
+static void openFirmwareUpdateInfoFile(void);
 
 static bool loadFirmwareUpdateInfoFile(char *updateInfoString, size_t updateInfoStringSize);
 
@@ -58,11 +61,25 @@ static bool isWhitespace(char *str)
   return true;
 }
 
+static char *separator(void)
+{
+  char *os = getenv("OS");
+  if (os != NULL && strcmp(os, "Windows_NT") == 0) 
+  {
+    return "\\";
+  }
+  else
+  {
+    return "/";
+  }
+}
+
 void firmwareUpdateInfoReader_init(void)
 {
   size_t updateVerificationDataSize = getVerificationDataSize(DEMO_PRODUCT_FIRMWARE_UPDATE_VERIFICATION_ALGORITHM);
   updateVerificationData = ((uint8_t *)(malloc(updateVerificationDataSize)));
   memset(updateVerificationData, 0, updateVerificationDataSize);
+  
   /* 
    * Create empty firmware update info file
    */
@@ -73,7 +90,20 @@ void firmwareUpdateInfoReader_init(void)
   /* 
    * Open firmware update info file in Visual Studio Code (if installed)
    */
-  openFirmwareUpdateInfoFileInVSCode();
+  if (canOpenFirmwareUpdateInfoFile()) 
+  {
+    openFirmwareUpdateInfoFile();
+  }
+}
+
+void firmwareUpdateInfoReader_explain(char *programDir)
+{
+  /* 
+   * Output user instructions
+   */
+  char *sep = (strlen(programDir) > 0) ? (separator()) : ("");
+  printf("Waiting for firmware update info to be entered and saved in '%s%s%s' file\n(if this file has not been opened automatically already, just open it manually in an editor of your choice)\n", programDir, sep, DEMO_PRODUCT_UPDATE_INFO_FILE_NAME);
+  printf("Expected firmware update info format: <new-version>:<checksum-or-signature> (e.g., 1.1:8639e6e80b089338e51fac17d5faa647c4c05368e46af5c42583fb34c0) \n");
 }
 
 void firmwareUpdateInfoReader_run(void)
@@ -114,7 +144,7 @@ void firmwareUpdateInfoReader_run(void)
 
 static bool createFirmwareUpdateInfoFile(void)
 {
-  FILE *updateInfoFile = fopen(DEMO_PRODUCT_UPDATE_INFO_FILE_NAME, "w");
+  FILE *updateInfoFile = fopen(DEMO_PRODUCT_UPDATE_INFO_FILE_NAME, "wb");
   if (updateInfoFile == NULL) 
   {
     printf("Failed to create %s: %s (error code: %i)\n", DEMO_PRODUCT_UPDATE_INFO_FILE_NAME, strerror(errno), errno);
@@ -124,25 +154,53 @@ static bool createFirmwareUpdateInfoFile(void)
   return true;
 }
 
-static void openFirmwareUpdateInfoFileInVSCode(void)
+static bool canOpenFirmwareUpdateInfoFile(void)
 {
-  char vsCodePath[260 + 1] = "";
+  /* 
+   * Run system command retrieving and counting number Visual Studio Code installations
+   */
   char *os = getenv("OS");
+  char command[260 + 1] = "";
   if (os != NULL && strcmp(os, "Windows_NT") == 0) 
   {
-    snprintf(vsCodePath, sizeof(vsCodePath), "C:\\Users\\%s\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code", getenv("USERNAME"));
+    snprintf(command, sizeof(command), "powershell -command \"where.exe code | Measure-Object -Line | Select-Object -ExpandProperty Lines\"");
   }
   else
   {
-    snprintf(vsCodePath, sizeof(vsCodePath), "/usr/bin/code");
+    snprintf(command, sizeof(command), "which code | wc -l");
   }
   
-  if (access(vsCodePath, F_OK) != -1) 
+  /* 
+   * Access system command output
+   */
+  FILE *commandPipe = popen(command, "r");
+  if (commandPipe == NULL) 
   {
-    char openCommand[260 + 1] = "";
-    snprintf(openCommand, sizeof(openCommand), "code %s", DEMO_PRODUCT_UPDATE_INFO_FILE_NAME);
-    system(openCommand);
+    printf("Failed to run '%s' command: %s (error code: %i)\n", command, strerror(errno), errno);
+    return false;
   }
+  
+  /* 
+   * Parse system command ouput
+   */
+  int32_t count = 0;
+  if (fscanf(commandPipe, "%d", &count) != 1) 
+  {
+    pclose(commandPipe);
+    return false;
+  }
+  pclose(commandPipe);
+  return count > 0;
+}
+
+static void openFirmwareUpdateInfoFile(void)
+{
+  /* 
+   * Open firmware update info file in Visual Studio Code
+   */
+  char command[260 + 1] = "";
+  snprintf(command, sizeof(command), "code %s", DEMO_PRODUCT_UPDATE_INFO_FILE_NAME);
+  system(command);
 }
 
 static bool loadFirmwareUpdateInfoFile(char *updateInfoString, size_t updateInfoStringSize)

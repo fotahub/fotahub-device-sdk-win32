@@ -74,7 +74,7 @@ MATCHES_TARGET_DemoProduct = $(if $(or $(FULLY_PORTABLE_DemoProduct),$(filter $(
 BUILDABLE_DemoProduct = $(if $(and $(MATCHES_TARGET_DemoProduct),$(TARGET_TOOLCHAIN_AVAILABLE)),true,)
 
 EXPFX_DemoProduct = ./
-EXAFKT_DemoProduct = $(shell sed -n -e 's@^\#define DEMO_PRODUCT_NAME "\(.\+\)"@\1@p' DemoProductInfo.h | sed -e 's@\s@@g')
+EXAFKT_DemoProduct = $(shell sed -n -e 's@^\#define DEMO_PRODUCT_NAME "\(.\+\)"@\1@p' DemoProductInfo.h | sed -e 's@\s@@g')$(if $(UPDATE),Update,)
 EXEXT_DemoProduct = .exe
 
 ALL_CFLAGS_DemoProduct = $(CFLAGS) -DWINVER=0x0601 -D_WIN32_WINNT=0x0601

@@ -38,6 +38,8 @@ extern "C" {
 
 void firmwareUpdateInfoReader_init(void);
 
+void firmwareUpdateInfoReader_explain(char *programDir);
+
 void firmwareUpdateInfoReader_run(void);
 
 #ifdef __cplusplus

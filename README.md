@@ -8,8 +8,8 @@ To use the FotaHub&reg; Device SDK for Windows&reg;, the following tools must be
 
 # Getting started
 The best way to get started with the FotaHub&reg; Device SDK for Windows&reg; is to try out and study the included examples:
-* **Simple** - "Hello World" of firmware over-the-air updating with FotaHub&reg; (:construction: *under construction*)
-* **Revertible** - Downloads and launches a new firmware version provided at FotaHub&reg;, reverts to the previous version if something goes wrong (:construction: *under construction*)
+* [Simple](docs/getting-started/simple.md) - "Hello World" of firmware over-the-air updating with FotaHub&reg;
+* [Revertible](docs/getting-started/revertible.md) - Downloads and launches a new firmware version provided at FotaHub&reg;, reverts to the previous version if something goes wrong
 
 # API Reference
 View the [C API reference](include/FotaHub.h) for detailed information about the FotaHub&reg; client library (:construction: *under construction*).
