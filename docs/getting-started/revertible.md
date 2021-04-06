@@ -6,12 +6,12 @@ The *Revertible* example is an enhanced version of the [Simple](simple.md) examp
 
 The firmware over-the-air update procedure gets triggered and works in the same way as in the [Simple](simple.md) example up to the point where the new firmware version gets activated. Right after starting the new firmware version, a built-in self test procedure is launched. Only when the latter completes successfully, the new firmware version is confirmed and becomes definite. In the opposite case, the previous firmware version is restored.
 
-For obvious reasons, the ultimately required self test logic depends heavily on the nature of the underlying IoT application and device. The revertible example therefore implements only a very simple self test stub which returns a positive or negative result on a pseudo-random basis (see [DemoFOTAUpdateSelfTest.c](../../examples/revertible/DemoFOTAUpdateSelfTest.c) for details). Consequently, the firmware update carried out in this example may succeed and remain in place or fail and be reverted to the previous version depending on how it goes. To see both scenarios happening, just run the same example multiple times.
+For obvious reasons, the ultimately required self test logic depends heavily on the nature of the underlying IoT application and device. The revertible example therefore implements only a very simple self test stub which returns a positive or negative result on a pseudo-random basis (see [DemoFOTAUpdateSelfTest.c](../../examples/revertible/DemoFOTAUpdateSelfTest.c) for details). Consequently, the firmware update carried out in this example may succeed and remain in place or fail and be reverted to the previous version depending on how it goes. To see both scenarios happening, just run the same example multiple times or set the `SIMULATED_ACTIVATION_SUCCESS_RATE` constant in [DemoFOTAUpdateSelfTest.h](../../examples/revertible/DemoFOTAUpdateSelfTest.h) to `0`.
 
 ## Usage
 
-1. Follow the usage instructions of the Simple example as described [here](simple.md).
+1. Follow the usage instructions of the Simple example as described [here](simple.md#usage).
 
-2. In the very last step, you will observe the same result and output as with the Simple example in case the built-in self test succeeds. Otherwise you will be able to see how the new fimware version stops executing and the previous firmware version resumes instead:
+2. In the very last step, you will observe the same result and a very similar terminal output as with the *Simple* example in case the built-in self test succeeds. Otherwise, you will see that the new fimware version initiates the reversion of the firmware update and exits, and how the previous firmware version resumes right after:
 
 ![](revertible-1.png "Reversion to previous firmware version") 

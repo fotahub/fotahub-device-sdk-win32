@@ -4,7 +4,13 @@ The FotaHub&reg; Device SDK for Windows&reg; enables developers to create firmwa
 # Installation
 To use the FotaHub&reg; Device SDK for Windows&reg;, the following tools must be available on your laptop or computer:
 * A GCC compiler/linker toolchain, we recommend [MSYS2](https://www.msys2.org)
-* A text editor or IDE of your choice, e.g., [Visual Studio Code](https://code.visualstudio.com) 
+* A text editor or IDE of your choice, e.g., [Visual Studio Code](https://code.visualstudio.com)
+
+To enable MSYS2 `make`, `gcc`, etc. to be invoked conveniently from Visual Studio Code's integrated terminal, add the following locations to your user or system level `Path` environment variable:
+- `C:\msys64\mingw64\bin`
+- `C:\msys64\usr\bin`
+
+> &#x1F6C8; The indicated locations assume that you have installed MSYS2 into `C:\msys64`. If this is not the case, make sure to adjust them accordingly.
 
 # Getting started
 The best way to get started with the FotaHub&reg; Device SDK for Windows&reg; is to try out and study the included examples:

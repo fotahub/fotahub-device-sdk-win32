@@ -33,7 +33,7 @@ toLowerCase = $(shell echo $1 | tr A-Z a-z)
 
 ifeq ($(HOST),$(TARGET))
 export CC = gcc
-export LD = gcc
+export LD = $(CC)
 TARGET_TOOLCHAIN_AVAILABLE = true
 endif
 
