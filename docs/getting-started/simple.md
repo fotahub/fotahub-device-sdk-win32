@@ -4,15 +4,15 @@ The *Simple* example demonstrates the most straight forward manner to make firmw
 
 ## Operating principle
 
-The goal of this example is to create an executable program (i.e., a Windows EXE file) that demonstrates a full firmware update cycle using FotaHub and can be run directly from your laptop or computer. It works in almost the same way as the update of an embedded firmware on an actutal IoT device. The firmware program is going to be named after the corresponding FotaHub product (e.g., `DemoProduct.exe`) that you will create along the way (or maybe have created already).
+The goal of this example is to create an executable program (i.e., a Windows EXE file) that behaves like an IoT device firmware and demonstrates a full firmware update cycle using FotaHub directly on your Windows desktop computer.
 
-Right after being launched, the firmware program creates and opens a file named `DemoProductUpdate.info` that is located in the same folder as the firmware program. It waits until a firmware update info string is entered and saved in this file. The latter is expected to consist of the new firmware version the device should be updated to followed by a ':' and the checksum of the new firmware version:
+The firmware program is going to be named after the corresponding FotaHub product (e.g., `DemoProduct.exe`) that you will create along the way (or maybe have created already). Right after being launched, it creates and opens a file named `DemoProductUpdate.info` that is located in the same folder as the firmware program. It waits until a firmware update info string is entered and saved in this file. The latter is expected to consist of the new firmware version the device should be updated to followed by a ':' and the checksum of the new firmware version:
 
 `<new-version>:<checksum>` 
 
 e.g., `1.1:a15d5599d8745ff4f51690eb3996afcf75d0b1729d1b8cda2491b03940417521`
 
-Once a valid update info string has been found in the `DemoProductUpdate.info` file and the contained new firmware version is different from the version of the already running firmware program, the firmware update procedure is triggered. It involves your laptop or computer to connect to FotaHub and download the binary (i.e., the Windows EXE file) of the new firmware version. Thereby it uses a dedicated URL including the id of the product representing the device in FotaHub, and the name and the version of the firmware binary to be retrieved.
+Once a valid update info string has been found in the `DemoProductUpdate.info` file and the contained new firmware version is different from the version of the already running firmware program, the firmware update procedure is triggered. It involves your Windows desktop computer to connect to FotaHub and download the binary (i.e., the Windows EXE file) of the new firmware version. Thereby, it uses a dedicated URL including the id of the product representing the device in FotaHub, and the name and the version of the firmware binary to be retrieved.
 
 The downloaded firmware binary is stored in a new firmware program file that has the same name as the original one followed by an imaginary partition index '1' (e.g., `DemoProduct1.exe`). At the same time, the downloaded firmware binary's checksum gets recalculated and compared to the checksum included in the previously communicated update info string. If both match the firmware update gets activated by loading and executing the new firmware program file as a new child process. This causes the original firmware program to be replaced with a running instance of the new firmware version downloaded from FotaHub.  
 
