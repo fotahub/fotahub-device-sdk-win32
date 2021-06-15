@@ -23,4 +23,4 @@ View the [C API reference](include/FotaHub.h) for detailed information about the
 # License and third-party software
 Unless specifically indicated otherwise in a file included in this project, FotaHub&reg; Device SDK for Windows&reg; files are provided under the *Apache-2.0* license. See the [LICENSE](LICENSE) file for the full text of this license.
 
-The terms of the license attributed to this project do not alter any rights or obligations you may have under the licenses of any third-party software this project includes. Refer to the [NOTICE](NOTICE.md) file for detailed information about the third-party software which is redistributed through this project.
+The terms of the license attributed to this project do not alter any rights or obligations you may have under the licenses of any third-party software which is redistributed through the present project. Refer to the [NOTICE](NOTICE.md) file for detailed information regarding these aspects.
