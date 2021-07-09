@@ -23,7 +23,6 @@
 #include "DemoProductInfo.h"
 #include "FotaHub.h"
 #include <string.h>
-#include <limits.h>
 #include <direct.h>
 
 static char *dirname(char *path);

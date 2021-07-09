@@ -42,7 +42,7 @@ static bool parseFirmwareUpdateInfo(char *updateInfoString);
 
 static char lastUpdateInfoString[260 + 1] = { 0 };
 
-static char updateVersion[MAX_UPDATE_VERSION_LENGTH + 1] = { 0 };
+static char updateVersion[MAX_DEMO_FIRMWARE_UPDATE_VERSION_LENGTH + 1] = { 0 };
 
 static uint8_t *updateVerificationData = NULL;
 
@@ -254,7 +254,7 @@ static bool parseFirmwareUpdateInfo(char *updateInfoString)
   }
   if (strlen(parsedVersion) > getVerificationDataSize(DEMO_PRODUCT_FIRMWARE_UPDATE_VERIFICATION_ALGORITHM)) 
   {
-    printf("Received firmware update version too long (max. length = %hhu)\n", MAX_UPDATE_VERSION_LENGTH);
+    printf("Received firmware update version too long (max. length = %hhu)\n", MAX_DEMO_FIRMWARE_UPDATE_VERSION_LENGTH);
     return false;
   }
   strncpy(updateVersion, parsedVersion, sizeof(updateVersion));
@@ -271,7 +271,7 @@ static bool parseFirmwareUpdateInfo(char *updateInfoString)
   }
   if (strlen(parsedVerificationData) > getVerificationDataSize(DEMO_PRODUCT_FIRMWARE_UPDATE_VERIFICATION_ALGORITHM) << 1) 
   {
-    printf("Received firmware update verification data too long (max. length = %hhu)\n", MAX_UPDATE_VERSION_LENGTH << 1);
+    printf("Received firmware update verification data too long (max. length = %hhu)\n", MAX_DEMO_FIRMWARE_UPDATE_VERSION_LENGTH << 1);
     memset(updateVersion, 0, sizeof(updateVersion));
     return false;
   }

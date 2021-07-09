@@ -34,7 +34,7 @@ extern "C" {
 
 #define UPDATE_INFO_DELIMITERS ((": \t\r\n"))
 
-#define MAX_UPDATE_VERSION_LENGTH 32
+#define MAX_DEMO_FIRMWARE_UPDATE_VERSION_LENGTH 32
 
 void firmwareUpdateInfoReader_init(void);
 
