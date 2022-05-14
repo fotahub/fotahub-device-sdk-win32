@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -108,6 +108,7 @@ bool AWSIoTThingShadowGateImpl_awsThingShadowEngine__execute(awsThingShadowEngin
            */
           bool __transitionResult = true;
           
+          printf("Connected to AWS IoT Thing Shadow\n");
           ___cid->awsIoTThingShadowSession__field = (*((void const **)((arguments[0]))));
           if (!AWSIoTThingShadowGateImpl_updateThingShadowState(___cid)) 
           {
@@ -170,7 +171,7 @@ bool AWSIoTThingShadowGateImpl_awsThingShadowEngine__execute(awsThingShadowEngin
         }
         case awsThingShadowEngine_thingShadowStatus__event:
         {
-          if ((*((AWSIoTThingShadowAckStatus_t *)((arguments[3])))) == AWS_IOT_THING_SHADOW_ACK_STATUS_ACCEPTED) 
+          if ((*((IoTResponseStatus_t *)((arguments[3])))) == IOT_RESPONSE_STATUS_ACCEPTED) 
           {
             /* 
              * enter target state
@@ -178,7 +179,7 @@ bool AWSIoTThingShadowGateImpl_awsThingShadowEngine__execute(awsThingShadowEngin
             instance->__currentState = awsThingShadowEngine_waitingForThingShadowDelta__state;
             break;
           }
-          if ((*((AWSIoTThingShadowAckStatus_t *)((arguments[3])))) != AWS_IOT_THING_SHADOW_ACK_STATUS_ACCEPTED) 
+          if ((*((IoTResponseStatus_t *)((arguments[3])))) != IOT_RESPONSE_STATUS_ACCEPTED) 
           {
             /* 
              * transition actions
@@ -439,7 +440,7 @@ bool AWSIoTThingShadowGateImpl_awsThingShadowEngine__execute(awsThingShadowEngin
   return true;
 }
 
-void AWSIoTThingShadowGateImpl_thingShadowHandler_connectionError(const void* hSession, AWSIoTError_t error, void *___id)
+void AWSIoTThingShadowGateImpl_thingShadowHandler_connectionError(const void* hSession, IoTError_t error, void *___id)
 {
   /* 
    * Do nothing
@@ -472,7 +473,7 @@ bool AWSIoTThingShadowGateImpl_updateThingShadowState(void *___id)
     return false;
   }
   
-  (*___cid->thingShadow__ops->update)(___cid->awsIoTThingShadowSession__field, jsonDocument, ___cid->thingShadow__ops->__instance);
+  (*___cid->thingShadow__ops->report)(___cid->awsIoTThingShadowSession__field, jsonDocument, ___cid->thingShadow__ops->__instance);
   
   return true;
 }
@@ -506,7 +507,7 @@ bool AWSIoTThingShadowGateImpl_handleThingShadowDelta(char const *jsonString, si
   {
     return false;
   }
-  (*___cid->thingShadow__ops->update)(___cid->awsIoTThingShadowSession__field, jsonDocument, ___cid->thingShadow__ops->__instance);
+  (*___cid->thingShadow__ops->report)(___cid->awsIoTThingShadowSession__field, jsonDocument, ___cid->thingShadow__ops->__instance);
   
   return true;
 }
@@ -553,20 +554,20 @@ void AWSIoTThingShadowGateImpl_thingShadowHandler_disconnected(const void* hSess
   AWSIoTThingShadowGateImpl_awsThingShadowEngine__execute(&___cid->thingShadowEngine__field, awsThingShadowEngine_disconnectedFromThingShadow__event, ___awsThingShadowEngine_disconnectedFromThingShadow__args, ___cid);
 }
 
-void AWSIoTThingShadowGateImpl_thingShadowHandler_status(const void* hSession, char const *thingName, AWSIoTThingShadowAction_t action, AWSIoTThingShadowAckStatus_t status, char *jsonString, size_t jsonStringLength, void *___id)
+void AWSIoTThingShadowGateImpl_thingShadowHandler_status(const void* hSession, char const *thingName, IoTAction_t action, IoTResponseStatus_t status, char *jsonString, size_t jsonStringLength, void *___id)
 {
   AWSIoTThingShadowGateImpl__cdata_t *___cid = ((AWSIoTThingShadowGateImpl__cdata_t *) ___id);
   const void* ___awsThingShadowEngine_thingShadowStatus_session__arg = hSession;
   char const *___awsThingShadowEngine_thingShadowStatus_thingName__arg = thingName;
-  AWSIoTThingShadowAction_t ___awsThingShadowEngine_thingShadowStatus_action__arg = action;
-  AWSIoTThingShadowAckStatus_t ___awsThingShadowEngine_thingShadowStatus_status__arg = status;
+  IoTAction_t ___awsThingShadowEngine_thingShadowStatus_action__arg = action;
+  IoTResponseStatus_t ___awsThingShadowEngine_thingShadowStatus_status__arg = status;
   char *___awsThingShadowEngine_thingShadowStatus_jsonString__arg = jsonString;
   size_t ___awsThingShadowEngine_thingShadowStatus_jsonStringLength__arg = jsonStringLength;
   void *___awsThingShadowEngine_thingShadowStatus__args[6] = { &___awsThingShadowEngine_thingShadowStatus_session__arg, &___awsThingShadowEngine_thingShadowStatus_thingName__arg, &___awsThingShadowEngine_thingShadowStatus_action__arg, &___awsThingShadowEngine_thingShadowStatus_status__arg, &___awsThingShadowEngine_thingShadowStatus_jsonString__arg, &___awsThingShadowEngine_thingShadowStatus_jsonStringLength__arg };
   AWSIoTThingShadowGateImpl_awsThingShadowEngine__execute(&___cid->thingShadowEngine__field, awsThingShadowEngine_thingShadowStatus__event, ___awsThingShadowEngine_thingShadowStatus__args, ___cid);
 }
 
-void AWSIoTThingShadowGateImpl_thingShadowHandler_delta(const void* hSession, char const *thingName, char *jsonString, size_t jsonStringLength, void *___id)
+void AWSIoTThingShadowGateImpl_thingShadowHandler_desired(const void* hSession, char const *thingName, char *jsonString, size_t jsonStringLength, void *___id)
 {
   AWSIoTThingShadowGateImpl__cdata_t *___cid = ((AWSIoTThingShadowGateImpl__cdata_t *) ___id);
   const void* ___awsThingShadowEngine_thingShadowDelta_session__arg = hSession;

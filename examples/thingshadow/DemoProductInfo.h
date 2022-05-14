@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -29,12 +29,11 @@ extern "C" {
 
 #define DEMO_PRODUCT_ID "<Your FotaHub product id>"
 
-#define DEMO_PRODUCT_NAME "Demo Product"
+#define DEMO_PRODUCT_NAME "esp32"
 
 #define DEMO_PRODUCT_FIRMWARE_VERSION "1.0"
 
 #define DEMO_PRODUCT_FIRMWARE_UPDATE_VERIFICATION_ALGORITHM FOTA_UPDATE_VERIFICATION_ALGORITHM_SHA256
-
 
 #ifdef __cplusplus
 } /* extern "C" */

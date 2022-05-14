@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -39,27 +39,27 @@ static bool runRandomSelfTest(uint8_t successRate)
   return true;
 }
 
-void validateFirmwareUpdateActivation(void)
+void validateFirmwareUpdateApplying(void)
 {
   printf("Validating firmware update\n");
   /* 
    * Perform any sort of tests and checks to see if device behaves as expected after firmware over-the-air update
    */
-  if (runRandomSelfTest(SIMULATED_ACTIVATION_SUCCESS_RATE)) 
+  if (runRandomSelfTest(SIMULATED_APPLYING_SUCCESS_RATE)) 
   {
-    printf("Firmware update successfully activated\n");
-    fotahub_onFirmwareUpdateStatusChanged(FOTA_UPDATE_STATUS_ACTIVATION_SUCCEEDED);
+    printf("Firmware update successfully applied\n");
+    fotahub_onFirmwareUpdateStatusChanged(FOTA_UPDATE_STATUS_APPLICATION_SUCCEEDED);
   }
   else
   {
-    printf("Firmware update activation failed\n");
-    fotahub_onFirmwareUpdateStatusChanged(FOTA_UPDATE_STATUS_ACTIVATION_FAILED);
+    printf("Firmware update applying failed\n");
+    fotahub_onFirmwareUpdateStatusChanged(FOTA_UPDATE_STATUS_APPLICATION_FAILED);
   }
 }
 
-void validateFirmwareUpdateReversion(void)
+void validateFirmwareUpdateRollingback(void)
 {
   printf("Validating previous firmware\n");
-  printf("Firmware update successfully reverted\n");
-  fotahub_onFirmwareUpdateStatusChanged(FOTA_UPDATE_STATUS_REVERSION_SUCCEEDED);
+  printf("Firmware update successfully rolled back\n");
+  fotahub_onFirmwareUpdateStatusChanged(FOTA_UPDATE_STATUS_ROLLBACK_SUCCEEDED);
 }

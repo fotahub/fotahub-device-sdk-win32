@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ struct IDatagramPool__idata {
   void *__instance;
   Datagram_t *((*(newDatagram))(size_t,void *));
   Datagram_t *((*(resizeDatagram))(Datagram_t *,size_t,void *));
-  void ((*(delete))(Datagram_t *,void *));
+  void ((*(deleteDatagram))(Datagram_t *,void *));
 };
 typedef struct IDatagramPool__idata IDatagramPool__idata_t;
 

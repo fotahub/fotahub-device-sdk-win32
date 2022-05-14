@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -23,25 +23,22 @@
 #include <stdbool.h>
 #include "AWSIoTDefinitions.h"
 #include "MQTTDefinitions.h"
-#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void buildAWSIoTThingShadowTopicName(char *topicName, char const *thingName, AWSIoTThingShadowAction_t action, AWSIoTThingShadowSubTopicKind_t subTopicKind);
+void buildAWSIoTThingShadowTopicName(char *topicName, char const *thingName, IoTAction_t action, IoTSubTopicKind_t subTopicKind);
 
-AWSIoTThingShadowAction_t getAWSIoTThingShadowActionfromTopicName(char *topicName, size_t topicNameLen);
+IoTAction_t getAWSIoTThingShadowActionfromTopicName(char *topicName, size_t topicNameLen);
 
-AWSIoTThingShadowSubTopicKind_t getAWSIoTThingShadowSubTopicfromTopicName(char *topicName, size_t topicNameLen);
+IoTSubTopicKind_t getAWSIoTThingShadowSubTopicfromTopicName(char *topicName, size_t topicNameLen);
 
-AWSIoTThingShadowAckStatus_t subTopicToAWSIoTThingShadowAckStatus(AWSIoTThingShadowSubTopicKind_t subTopic);
+IoTResponseStatus_t subTopicToAWSIoTThingShadowAckStatus(IoTSubTopicKind_t subTopic);
 
-AWSIoTError_t mqttToAWSIoTError(MQTTError_t mqttError);
+char *awsIoTThingShadowActionToString(IoTAction_t action);
 
-char *awsIoTThingShadowActionToString(AWSIoTThingShadowAction_t action);
-
-char *awsIoTThingShadowAckStatusToString(AWSIoTThingShadowAckStatus_t status);
+char *awsIoTThingShadowAckStatusToString(IoTResponseStatus_t status);
 
 #ifdef __cplusplus
 } /* extern "C" */

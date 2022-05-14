@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -19,19 +19,6 @@
 
 #include "PhysicalUnitConversions.h"
 #include <string.h>
-
-/* 
- * mqttpacket Library needs this function to read data received from transport layer
- */
-
-/* 
- * to complete
- */
-
-/* 
- * This implementation of MQTT uses the MQTT V3.1.1
- * It could be improved to support anterior versions
- */
 
 static int32_t getReceivedData(uint8_t *buf, int32_t count);
 
@@ -242,7 +229,6 @@ Datagram_t *MQTTClientImpl_mqttClient_newPublishMessage(const void* hSession, si
 bool MQTTClientImpl_mqttClient_sendPublishMessage(const void* hSession, char *topicName, Datagram_t *pMessage, MQTTPublishParameters_t *pParams, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
-  printf("Publishing message on topic %s\n", ((char *) topicName));
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *) hSession);
   if (MQTTClientImpl_isMQTTSessionDataDeleted(pSessionData, ___cid)) 
   {

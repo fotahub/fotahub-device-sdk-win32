@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ typedef struct DynamicDatagramPoolImpl__cdata DynamicDatagramPoolImpl__cdata_t;
 
 Datagram_t *DynamicDatagramPoolImpl_datagramPool_newDatagram(size_t length, void *___id);
 
-void DynamicDatagramPoolImpl_datagramPool_delete(Datagram_t *pDatagram, void *___id);
+void DynamicDatagramPoolImpl_datagramPool_deleteDatagram(Datagram_t *pDatagram, void *___id);
 
 Datagram_t *DynamicDatagramPoolImpl_datagramPool_resizeDatagram(Datagram_t *pDatagram, size_t newLength, void *___id);
 

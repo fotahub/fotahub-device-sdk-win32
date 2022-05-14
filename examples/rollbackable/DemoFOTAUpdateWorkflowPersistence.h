@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -15,19 +15,20 @@
  *
  *  This file is part of the FotaHub(R) Device SDK program (https://fotahub.com)
  */
-#ifndef DEMOFOTAUPDATEWORKFLOWFILEPERSISTENCE_H
-#define DEMOFOTAUPDATEWORKFLOWFILEPERSISTENCE_H
+#ifndef DEMOFOTAUPDATEWORKFLOWPERSISTENCE_H
+#define DEMOFOTAUPDATEWORKFLOWPERSISTENCE_H
 
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define DEMO_PRODUCT_UPDATE_STATE_FILE_NAME "DemoProductUpdate.state"
+void saveState(int16_t state);
+
+int16_t loadState(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

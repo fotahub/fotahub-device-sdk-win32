@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -15,32 +15,26 @@
  *
  *  This file is part of the FotaHub(R) Device SDK program (https://fotahub.com)
  */
-#ifndef SINGLEPARTITIONDEMOFIRMWAREUPDATEINFOFILEREADER_H
-#define SINGLEPARTITIONDEMOFIRMWAREUPDATEINFOFILEREADER_H
+#ifndef BINHEXCONVERTER_H
+#define BINHEXCONVERTER_H
 
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "DemoFOTAUpdateWorkflow.h"
-#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define DEMO_PRODUCT_UPDATE_INFO_FILE_NAME "DemoProductUpdate.info"
+uint8_t convertHexDigitToBinValue(char inputChr);
 
-#define UPDATE_INFO_SEPARATOR ":"
+size_t convertBinValueToHexString8(uint8_t inputValue, char *outputStr, size_t outputStrSize, bool upperCase);
 
-#define UPDATE_INFO_DELIMITERS ((": \t\r\n"))
+uint8_t convertHexString8ToBinValue(char *inputStr, size_t inputStrLength);
 
-#define MAX_DEMO_FIRMWARE_UPDATE_VERSION_LENGTH 32
+size_t convertBinDataToHexString8(uint8_t *inputData, size_t inputDataSize, char *outputStr, size_t outputStrSize, bool upperCase);
 
-void firmwareUpdateInfoReader_init(void);
-
-void firmwareUpdateInfoReader_explain(char *programDir);
-
-void firmwareUpdateInfoReader_run(void);
+size_t convertHexString8ToBinData(char *inputStr, size_t inputStrLength, uint8_t *pOutputData, size_t outputDataSize);
 
 #ifdef __cplusplus
 } /* extern "C" */

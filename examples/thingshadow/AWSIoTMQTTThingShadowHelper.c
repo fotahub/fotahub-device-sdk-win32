@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -18,30 +18,31 @@
 #include "AWSIoTMQTTThingShadowHelper.h"
 
 #include "StringHelper.h"
+#include <stdio.h>
 #include <string.h>
 
-void buildAWSIoTThingShadowTopicName(char *topicName, char const *thingName, AWSIoTThingShadowAction_t action, AWSIoTThingShadowSubTopicKind_t subTopicKind)
+void buildAWSIoTThingShadowTopicName(char *topicName, char const *thingName, IoTAction_t action, IoTSubTopicKind_t subTopicKind)
 {
   size_t length = strlen(thingName) - 3;
   
-  if (action == AWS_IOT_THING_SHADOW_ACTION_UPDATE) 
+  if (action == IOT_ACTION_REPORT) 
   {
     length += AWS_IOT_THING_SHADOW_TOPIC_UPDATE_LENGTH;
     switch (subTopicKind)
     {
-      case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_ACCEPTED:
+      case IOT_SUBTOPIC_KIND_ACCEPTED:
       {
         length += AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED_LENGTH;
         snprintf(topicName, length, AWS_IOT_THING_SHADOW_TOPIC_UPDATE_PATTERN, thingName, AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED);
         break;
       }
-      case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_REJECTED:
+      case IOT_SUBTOPIC_KIND_REJECTED:
       {
         length += AWS_IOT_THING_SHADOW_SUBTOPIC_REJECTED_LENGTH;
         snprintf(topicName, length, AWS_IOT_THING_SHADOW_TOPIC_UPDATE_PATTERN, thingName, AWS_IOT_THING_SHADOW_SUBTOPIC_REJECTED);
         break;
       }
-      case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_DELTA:
+      case IOT_SUBTOPIC_KIND_DELTA:
       {
         length += AWS_IOT_THING_SHADOW_SUBTOPIC_DELTA_LENGTH;
         snprintf(topicName, length, AWS_IOT_THING_SHADOW_TOPIC_UPDATE_PATTERN, thingName, AWS_IOT_THING_SHADOW_SUBTOPIC_DELTA);
@@ -53,17 +54,17 @@ void buildAWSIoTThingShadowTopicName(char *topicName, char const *thingName, AWS
       }
     }
   }
-  else if (action == AWS_IOT_THING_SHADOW_ACTION_GET) {
+  else if (action == IOT_ACTION_GET) {
     length += AWS_IOT_THING_SHADOW_TOPIC_GET_LENGTH;
     switch (subTopicKind)
     {
-      case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_ACCEPTED:
+      case IOT_SUBTOPIC_KIND_ACCEPTED:
       {
         length += AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED_LENGTH;
         snprintf(topicName, length, AWS_IOT_THING_SHADOW_TOPIC_GET_PATTERN, thingName, AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED);
         break;
       }
-      case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_REJECTED:
+      case IOT_SUBTOPIC_KIND_REJECTED:
       {
         length += AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED_LENGTH;
         snprintf(topicName, length, AWS_IOT_THING_SHADOW_TOPIC_GET_PATTERN, thingName, AWS_IOT_THING_SHADOW_SUBTOPIC_REJECTED);
@@ -79,109 +80,82 @@ void buildAWSIoTThingShadowTopicName(char *topicName, char const *thingName, AWS
   topicName[length] = '\0';
 }
 
-AWSIoTThingShadowAction_t getAWSIoTThingShadowActionfromTopicName(char *topicName, size_t topicNameLen)
+IoTAction_t getAWSIoTThingShadowActionfromTopicName(char *topicName, size_t topicNameLen)
 {
   if ((topicName == NULL) || (topicNameLen == 0)) 
   {
-    return AWS_IOT_THING_SHADOW_ACTION_INTERNAL;
+    return IOT_ACTION_INTERNAL;
   }
   
   if (StringHelper_strnstr(topicName, topicNameLen, AWS_IOT_THING_SHADOW_TOPIC_UPDATE) != NULL) 
   {
-    return AWS_IOT_THING_SHADOW_ACTION_UPDATE;
+    return IOT_ACTION_REPORT;
   }
   if (StringHelper_strnstr(topicName, topicNameLen, AWS_IOT_THING_SHADOW_TOPIC_GET) != NULL) 
   {
-    return AWS_IOT_THING_SHADOW_ACTION_GET;
+    return IOT_ACTION_GET;
   }
   
-  return AWS_IOT_THING_SHADOW_ACTION_INTERNAL;
+  return IOT_ACTION_INTERNAL;
 }
 
-AWSIoTThingShadowSubTopicKind_t getAWSIoTThingShadowSubTopicfromTopicName(char *topicName, size_t topicNameLen)
+IoTSubTopicKind_t getAWSIoTThingShadowSubTopicfromTopicName(char *topicName, size_t topicNameLen)
 {
   if ((topicName == NULL) || (topicNameLen == 0)) 
   {
-    return AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_NONE;
+    return IOT_SUBTOPIC_KIND_NONE;
   }
   
   if (StringHelper_strnstr(topicName, topicNameLen, AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED) != NULL) 
   {
-    return AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_ACCEPTED;
+    return IOT_SUBTOPIC_KIND_ACCEPTED;
   }
   if (StringHelper_strnstr(topicName, topicNameLen, AWS_IOT_THING_SHADOW_SUBTOPIC_REJECTED) != NULL) 
   {
-    return AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_REJECTED;
+    return IOT_SUBTOPIC_KIND_REJECTED;
   }
   if (StringHelper_strnstr(topicName, topicNameLen, AWS_IOT_THING_SHADOW_SUBTOPIC_DELTA) != NULL) 
   {
-    return AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_DELTA;
+    return IOT_SUBTOPIC_KIND_DELTA;
   }
-  return AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_NONE;
+  return IOT_SUBTOPIC_KIND_NONE;
 }
 
-AWSIoTThingShadowAckStatus_t subTopicToAWSIoTThingShadowAckStatus(AWSIoTThingShadowSubTopicKind_t subTopic)
+IoTResponseStatus_t subTopicToAWSIoTThingShadowAckStatus(IoTSubTopicKind_t subTopic)
 {
   switch (subTopic)
   {
-    case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_ACCEPTED:
+    case IOT_SUBTOPIC_KIND_ACCEPTED:
     {
-      return AWS_IOT_THING_SHADOW_ACK_STATUS_ACCEPTED;
+      return IOT_RESPONSE_STATUS_ACCEPTED;
     }
-    case AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_REJECTED:
+    case IOT_SUBTOPIC_KIND_REJECTED:
     {
-      return AWS_IOT_THING_SHADOW_ACK_STATUS_REJECTED;
+      return IOT_RESPONSE_STATUS_REJECTED;
     }
     default: {
-      return AWS_IOT_THING_SHADOW_ACK_STATUS_NONE;
+      return IOT_RESPONSE_STATUS_NONE;
     }
   }
 }
 
-AWSIoTError_t mqttToAWSIoTError(MQTTError_t mqttError)
-{
-  switch (mqttError)
-  {
-    case MQTT_ERROR_SOCKET_DISCONNECTED:
-    {
-      return AWS_IOT_ERROR_MQTT_DISCONNECTED;
-    }
-    case MQTT_ERROR_SOCKET_CONNECTION_FAILED:
-    {
-      return AWS_IOT_ERROR_NET_CONNECT_FAILED;
-    }
-    case MQTT_ERROR_SESSION_DATA_DELETED:
-    {
-      return AWS_IOT_ERROR_SESSION_DATA_DELETED;
-    }
-    case MQTT_ERROR_PACKET_SERIALIZATION_FAILED:
-    {
-      return AWS_IOT_ERROR_MQTT_THING_SHADOW_TOPIC_SUBSCRIPTION;
-    }
-    default: {
-      printf("MQTT error socket connection FAILED: %d\n", mqttError);
-      return AWS_IOT_ERROR_MQTT_CONNECTION;
-    }
-  }
-}
-
-char *awsIoTThingShadowActionToString(AWSIoTThingShadowAction_t action)
+char *awsIoTThingShadowActionToString(IoTAction_t action)
 {
   switch (action)
   {
-    case AWS_IOT_THING_SHADOW_ACTION_GET:
+    case IOT_ACTION_GET:
     {
       return "ThingShadow Get";
     }
-    case AWS_IOT_THING_SHADOW_ACTION_UPDATE:
+    case IOT_ACTION_REPORT:
     {
       return "ThingShadow Update";
     }
-    case AWS_IOT_THING_SHADOW_ACTION_DELETE:
+    case IOT_ACTION_DELETE:
     {
       return "ThingShadow Delete";
     }
-    case AWS_IOT_THING_SHADOW_ACTION_INTERNAL:
+    case IOT_ACTION_INTERNAL:
     {
       return "ThingShadow None";
     }
@@ -191,23 +165,23 @@ char *awsIoTThingShadowActionToString(AWSIoTThingShadowAction_t action)
   }
 }
 
-char *awsIoTThingShadowAckStatusToString(AWSIoTThingShadowAckStatus_t status)
+char *awsIoTThingShadowAckStatusToString(IoTResponseStatus_t status)
 {
   switch (status)
   {
-    case AWS_IOT_THING_SHADOW_ACK_STATUS_TIMEOUT:
+    case IOT_RESPONSE_STATUS_TIMEOUT:
     {
       return "Timeout";
     }
-    case AWS_IOT_THING_SHADOW_ACK_STATUS_REJECTED:
+    case IOT_RESPONSE_STATUS_REJECTED:
     {
       return "Rejected";
     }
-    case AWS_IOT_THING_SHADOW_ACK_STATUS_ACCEPTED:
+    case IOT_RESPONSE_STATUS_ACCEPTED:
     {
       return "Accepted";
     }
-    case AWS_IOT_THING_SHADOW_ACK_STATUS_NONE:
+    case IOT_RESPONSE_STATUS_NONE:
     {
       return "None";
     }

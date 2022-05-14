@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-#define MAX_CONNECT_MESSAGE_LENGTH 100
+#define MAX_CONNECT_MESSAGE_LENGTH 512
 
 #define DISCONNECT_MESSAGE_LENGTH 2
 

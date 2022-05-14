@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ enum DemoFOTAUpdateWorkflowEngine__states {
   DemoFOTAUpdateWorkflowEngine_connected__state,
   DemoFOTAUpdateWorkflowEngine_downloading__state,
   DemoFOTAUpdateWorkflowEngine_restarting__state,
-  DemoFOTAUpdateWorkflowEngine_activating__state,
-  DemoFOTAUpdateWorkflowEngine_reverting__state
+  DemoFOTAUpdateWorkflowEngine_applying__state,
+  DemoFOTAUpdateWorkflowEngine_rollingBack__state
 };
 typedef enum DemoFOTAUpdateWorkflowEngine__states DemoFOTAUpdateWorkflowEngine__states_t;
 
@@ -279,10 +279,10 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
               DemoFOTAUpdateWorkflowEngine__states_t __targetState = DemoFOTAUpdateWorkflowEngine_restarting__state;
               
               /* 
-               * Persist FOTA update state and activate downloaded firmware update
+               * Persist FOTA update state and apply downloaded firmware update
                */
-              saveState(DemoFOTAUpdateWorkflowEngine_activating__state);
-              if (!fotahub_activateFirmwareUpdate(&instance->updateInfo)) 
+              saveState(DemoFOTAUpdateWorkflowEngine_applying__state);
+              if (!fotahub_applyFirmwareUpdate(&instance->updateInfo)) 
               {
                 saveState(DemoFOTAUpdateWorkflowEngine_idle__state);
                 __targetState = DemoFOTAUpdateWorkflowEngine_connected__state;
@@ -353,7 +353,7 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
         }
         break;
       }
-      case DemoFOTAUpdateWorkflowEngine_activating__state:
+      case DemoFOTAUpdateWorkflowEngine_applying__state:
       {
         switch (event)
         {
@@ -364,9 +364,9 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
               /* 
                * transition actions
                */
-              validateFirmwareUpdateActivation();
+              validateFirmwareUpdateApplying();
               
-              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_activating__state) 
+              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_applying__state) 
               {
                 /* 
                  * enter target state
@@ -383,17 +383,17 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
               DemoFOTAUpdateWorkflowEngine__states_t __targetState = DemoFOTAUpdateWorkflowEngine_restarting__state;
               
               /* 
-               * Persist FOTA update state and revert activated firmware update
+               * Persist FOTA update state and roll back applied firmware update
                */
-              saveState(DemoFOTAUpdateWorkflowEngine_reverting__state);
-              if (!fotahub_revertFirmwareUpdate(&instance->updateInfo)) 
+              saveState(DemoFOTAUpdateWorkflowEngine_rollingBack__state);
+              if (!fotahub_rollBackFirmwareUpdate(&instance->updateInfo)) 
               {
                 saveState(DemoFOTAUpdateWorkflowEngine_idle__state);
                 __targetState = DemoFOTAUpdateWorkflowEngine_connected__state;
                 __transitionResult = false;
               }
               
-              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_activating__state) 
+              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_applying__state) 
               {
                 /* 
                  * enter target state
@@ -426,7 +426,7 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
           }
           case DemoFOTAUpdateWorkflowEngine_updateStatusChanged__event:
           {
-            if ((*((FOTAUpdateStatus_t *)((arguments[0])))) == FOTA_UPDATE_STATUS_ACTIVATION_SUCCEEDED) 
+            if ((*((FOTAUpdateStatus_t *)((arguments[0])))) == FOTA_UPDATE_STATUS_APPLICATION_SUCCEEDED) 
             {
               /* 
                * transition actions
@@ -442,7 +442,7 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
                 __transitionResult = false;
               }
               
-              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_activating__state) 
+              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_applying__state) 
               {
                 /* 
                  * enter target state
@@ -457,7 +457,7 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
               }
               break;
             }
-            if ((*((FOTAUpdateStatus_t *)((arguments[0])))) == FOTA_UPDATE_STATUS_ACTIVATION_FAILED) 
+            if ((*((FOTAUpdateStatus_t *)((arguments[0])))) == FOTA_UPDATE_STATUS_APPLICATION_FAILED) 
             {
               /* 
                * transition actions
@@ -466,17 +466,17 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
               DemoFOTAUpdateWorkflowEngine__states_t __targetState = DemoFOTAUpdateWorkflowEngine_restarting__state;
               
               /* 
-               * Persist FOTA update state and revert activated firmware update
+               * Persist FOTA update state and roll back applied firmware update
                */
-              saveState(DemoFOTAUpdateWorkflowEngine_reverting__state);
-              if (!fotahub_revertFirmwareUpdate(&instance->updateInfo)) 
+              saveState(DemoFOTAUpdateWorkflowEngine_rollingBack__state);
+              if (!fotahub_rollBackFirmwareUpdate(&instance->updateInfo)) 
               {
                 saveState(DemoFOTAUpdateWorkflowEngine_idle__state);
                 __targetState = DemoFOTAUpdateWorkflowEngine_connected__state;
                 __transitionResult = false;
               }
               
-              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_activating__state) 
+              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_applying__state) 
               {
                 /* 
                  * enter target state
@@ -513,7 +513,7 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
         }
         break;
       }
-      case DemoFOTAUpdateWorkflowEngine_reverting__state:
+      case DemoFOTAUpdateWorkflowEngine_rollingBack__state:
       {
         switch (event)
         {
@@ -524,9 +524,9 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
               /* 
                * transition actions
                */
-              validateFirmwareUpdateReversion();
+              validateFirmwareUpdateRollingback();
               
-              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_reverting__state) 
+              if (instance->__currentState == DemoFOTAUpdateWorkflowEngine_rollingBack__state) 
               {
                 /* 
                  * enter target state

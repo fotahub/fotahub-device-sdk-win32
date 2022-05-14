@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -15,22 +15,19 @@
  *
  *  This file is part of the FotaHub(R) Device SDK program (https://fotahub.com)
  */
-#ifndef DEMOFOTAUPDATEWORKFLOW_H
-#define DEMOFOTAUPDATEWORKFLOW_H
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
 
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include "FotaHub.h"
+#include "FOTAUpdateDefinitions.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void fotaUpdateWorkflow_init(void);
-
-void fotaUpdateWorkflow_onFirmwareUpdateVersionChanged(char *updateVersion);
+extern FOTAUpdateClientConfig_t FOTA_UPDATE_CLIENT_CONFIG;
 
 #ifdef __cplusplus
 } /* extern "C" */

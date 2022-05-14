@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -15,26 +15,32 @@
  *
  *  This file is part of the FotaHub(R) Device SDK program (https://fotahub.com)
  */
-#ifndef DEMOPRODUCTINFO_H
-#define DEMOPRODUCTINFO_H
+#ifndef SINGLEPARTITIONDEMOFIRMWAREUPDATEINFOFILEREADER_H
+#define SINGLEPARTITIONDEMOFIRMWAREUPDATEINFOFILEREADER_H
 
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "FOTAUpdateDefinitions.h"
+#include "DemoFOTAUpdateWorkflow.h"
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define DEMO_PRODUCT_ID "<Your FotaHub product id>"
+#define DEMO_PRODUCT_UPDATE_INFO_FILE_NAME "DemoProductUpdate.info"
 
-#define DEMO_PRODUCT_NAME "Demo Product"
+#define UPDATE_INFO_SEPARATOR ":"
 
-#define DEMO_PRODUCT_FIRMWARE_VERSION "1.0"
+#define UPDATE_INFO_DELIMITERS ((": \t\r\n"))
 
-#define DEMO_PRODUCT_FIRMWARE_UPDATE_VERIFICATION_ALGORITHM FOTA_UPDATE_VERIFICATION_ALGORITHM_SHA256
+#define MAX_DEMO_FIRMWARE_UPDATE_VERSION_LENGTH 32
 
+void firmwareUpdateInfoReader_init(void);
+
+void firmwareUpdateInfoReader_explain(char *programDir);
+
+void firmwareUpdateInfoReader_run(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

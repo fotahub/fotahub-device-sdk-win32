@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ Datagram_t *DynamicDatagramPoolImpl_datagramPool_newDatagram(size_t length, void
   return ((Datagram_t *)(pDatagram));
 }
 
-void DynamicDatagramPoolImpl_datagramPool_delete(Datagram_t *pDatagram, void *___id)
+void DynamicDatagramPoolImpl_datagramPool_deleteDatagram(Datagram_t *pDatagram, void *___id)
 {
   if (pDatagram == NULL) 
   {
@@ -132,6 +132,6 @@ Datagram_t *DynamicDatagramPoolImpl_datagramPool_resizeDatagram(Datagram_t *pDat
   /* 
    * Delete old datagram
    */
-  DynamicDatagramPoolImpl_datagramPool_delete(pDatagram, ___cid);
+  DynamicDatagramPoolImpl_datagramPool_deleteDatagram(pDatagram, ___cid);
   return pResizedDatagram;
 }

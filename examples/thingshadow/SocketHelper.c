@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -20,10 +20,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-/* 
- * Converts given physical maximum fragment length into MaxFragmentLength enum value as per RFC 6066 section 4 (see https://tools.ietf.org/html/rfc6066#page-8 for details).
- */
 
 char *getCertsDir(char *certsDir, size_t maxCertsDirLength)
 {

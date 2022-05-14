@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -15,13 +15,22 @@
  *
  *  This file is part of the FotaHub(R) Device SDK program (https://fotahub.com)
  */
-#include "Configuration.h"
+#ifndef DEMOFOTAUPDATEWORKFLOWFILEPERSISTENCE_H
+#define DEMOFOTAUPDATEWORKFLOWFILEPERSISTENCE_H
 
-FOTAUpdateClientConfig_t FOTA_UPDATE_CLIENT_CONFIG = 
-{
-  .authenticateUpdateServer = true, 
-  .maxUpdateDownloadFragmentLength = TLS_MAX_FRAGMENT_LENGTH_DISABLED, 
-  .maxUpdateDownloadDataRate = TLS_MAX_DATA_RATE_NONE, 
-  .updateDownloadTimeoutInterval = FIRMWARE_UPDATE_DOWNLOAD_TIMEOUT_DEFAULT, 
-  .maxUpdateDownloadRetryCount = MAX_FIRMWARE_UPDATE_DOWNLOAD_RETRY_COUNT_DEFAULT
-};
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define DEMO_PRODUCT_UPDATE_STATE_FILE_NAME "DemoProductUpdate.state"
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
+#endif

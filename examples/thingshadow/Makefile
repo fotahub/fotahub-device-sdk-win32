@@ -28,6 +28,8 @@ Q = @
 endif
 
 vecho = @echo
+replaceDir = $(addprefix $1/,$(notdir $2))
+parentDirs = $(sort $(patsubst %/,%,$(dir $1)))
 toUpperCase = $(shell echo $1 | tr a-z A-Z)
 toLowerCase = $(shell echo $1 | tr A-Z a-z)
 
@@ -88,15 +90,15 @@ ALL_LIB_FLAGS_DemoProduct = $(addprefix -l,$(LIBS_DemoProduct)) $(addprefix -l,$
 ALL_LIBDIR_FLAGS_DemoProduct = $(addprefix -L,$(LIBDIRS_DemoProduct)) $(addprefix -L,$(LIBDIRS)) $(addprefix -L,$(EXT_LIBDIRS_DemoProduct))
 
 LIB_INCDIRS_DemoProduct = $(FOTAHUB_INCDIR)
-EXT_INCDIRS_DemoProduct = $(PREFIX)/third-party/mbedtls/include $(PREFIX)/third-party/paho.mqtt.embedded-c/include $(PREFIX)/third-party/se.sics.contiki.json/include $(PREFIX)/include
+EXT_INCDIRS_DemoProduct = $(PREFIX)/third-party/mbedtls/include $(PREFIX)/third-party/paho.mqtt.embedded-c/include $(PREFIX)/third-party/se.sics.contiki.json/include $(PREFIX)/include $(PREFIX)/third-party/paho.mqtt.embedded-c $(PREFIX)/third-party/paho.mqtt.embedded-c/include $(PREFIX)/third-party/se.sics.contiki.json $(PREFIX)/third-party/se.sics.contiki.json/include
 ALL_INCDIR_FLAGS_DemoProduct = $(addprefix -I,$(LIB_INCDIRS_DemoProduct)) $(addprefix -I,$(INCDIRS)) $(addprefix -I,$(EXT_INCDIRS_DemoProduct))
-ALL_INCS_DemoProduct = Main.h JSONDefinitions.h AbstractAWSIoTMQTTThingShadowImpl.h AWSIoTMQTTThingShadowImpl.h MathConstants.h CommonServices.h DatagramPool.h PhysicalUnitConversions.h MbedTLSClientImpl.h MQTTPacketExtensions.h EndpointAddressDefinitions.h TextIO.h MQTTClientImpl.h DemoFOTAUpdateWorkflow.h AWSIoTThingShadowDocumentDefinition.h AWSIoT.h DynamicDatagramPoolImpl.h AWSIoTThingShadowGateImpl.h SocketDefinitions.h AWSIoTMQTTThingShadowHelper.h JSON.h DatagramHelper.h SafeMemoryCopy.h X509Definitions.h Datagram.h SocketHelper.h MQTTDefinitions.h Timer.h X509.h BinHexConverter.h JSONTreeExtensions.h Configuration.h AWSCredentialsDefinitions.h MbedTLSDefinitions.h AWSIoTX509CertStoreImpl.h JSONProcessorImpl.h ConnectionManagement.h AWSIoTThingShadowConfiguration.h DemoFOTAUpdateSelfTest.h FOTAUpdate.h AWSIoTDefinitions.h StringHelper.h MQTT.h DemoFOTAUpdateWorkflowFilePersistence.h Socket.h DemoFirmwareUpdateInfo.h SinglePartitionMbedTLSAWSIoTThingShadowWiring.h MbedTLSAWSIoTThingShadowStack.h SinglePartitionAWSIoTThingShadowDataPlane.h Mutex.h DemoFOTAUpdateWorkflowPersistence.h DemoProductInfo.h $(foreach lidir,$(LIB_INCDIRS_DemoProduct),$(wildcard $(lidir)/*.h)) $(foreach idir,$(INCDIRS),$(wildcard $(idir)/*.h)) $(foreach eidir,$(EXT_INCDIRS_DemoProduct),$(wildcard $(eidir)/*.h))
+ALL_INCS_DemoProduct = AbstractAWSIoTMQTTThingShadowImpl.h AWSCredentialsDefinitions.h AWSIoTDefinitions.h AWSIoTMQTTThingShadowHelper.h AWSIoTMQTTThingShadowImpl.h AWSIoTThingShadowConfiguration.h AWSIoTThingShadowDocumentDefinition.h AWSIoTThingShadowGateImpl.h AWSIoTX509CertStoreImpl.h BinHexConverter.h CommonServices.h Configuration.h ConnectionManagement.h Datagram.h DatagramHelper.h DatagramPool.h DemoFirmwareUpdateInfo.h DemoFOTAUpdateSelfTest.h DemoFOTAUpdateWorkflow.h DemoFOTAUpdateWorkflowFilePersistence.h DemoFOTAUpdateWorkflowPersistence.h DemoProductInfo.h DynamicDatagramPoolImpl.h EndpointAddressDefinitions.h FOTAUpdate.h IoT.h IoTDefinitions.h JSON.h JSONDefinitions.h JSONProcessorImpl.h JSONTreeExtensions.h Main.h MathConstants.h MbedTLSAWSIoTThingShadowStack.h MbedTLSClientImpl.h MbedTLSDefinitions.h MQTT.h MQTTClientImpl.h MQTTDefinitions.h MQTTPacketExtensions.h Mutex.h PhysicalUnitConversions.h SafeMemoryCopy.h SinglePartitionAWSIoTThingShadowDataPlane.h SinglePartitionMbedTLSAWSIoTThingShadowWiring.h Socket.h SocketDefinitions.h SocketHelper.h StringHelper.h TextIO.h Timer.h X509.h X509Definitions.h $(foreach lidir,$(LIB_INCDIRS_DemoProduct),$(wildcard $(lidir)/*.h)) $(foreach idir,$(INCDIRS),$(wildcard $(idir)/*.h)) $(foreach eidir,$(EXT_INCDIRS_DemoProduct),$(wildcard $(eidir)/*.h))
 
 EXT_SRCDIR_DemoProduct_0 = $(PREFIX)/third-party/paho.mqtt.embedded-c
 EXT_SRCDIR_DemoProduct_1 = $(PREFIX)/third-party/se.sics.contiki.json
-ALL_SRCS_DemoProduct = AWSIoTMQTTThingShadowHelper.c AWSIoTMQTTThingShadowImpl.c AWSIoTThingShadowConfiguration.c AWSIoTThingShadowDocumentDefinition.c AWSIoTThingShadowGateImpl.c AWSIoTX509CertStoreImpl.c AbstractAWSIoTMQTTThingShadowImpl.c BinHexConverter.c Certificate.c Configuration.c DemoFOTAUpdateSelfTest.c DemoFOTAUpdateWorkflow.c DemoFOTAUpdateWorkflowFilePersistence.c DynamicDatagramPoolImpl.c JSONProcessorImpl.c JSONTreeExtensions.c MQTTClientImpl.c MQTTPacketExtensions.c Main.c MbedTLSAWSIoTThingShadowStack.c MbedTLSClientImpl.c PrivateKey.c SafeMemoryCopy.c SinglePartitionAWSIoTThingShadowDataPlane.c SinglePartitionMbedTLSAWSIoTThingShadowWiring.c SocketHelper.c StringHelper.c $(wildcard $(EXT_SRCDIR_DemoProduct_0)/*.c) $(wildcard $(EXT_SRCDIR_DemoProduct_1)/*.c)
+ALL_SRCS_DemoProduct = AbstractAWSIoTMQTTThingShadowImpl.c AWSIoTMQTTThingShadowHelper.c AWSIoTMQTTThingShadowImpl.c AWSIoTThingShadowConfiguration.c AWSIoTThingShadowDocumentDefinition.c AWSIoTThingShadowGateImpl.c AWSIoTX509CertStoreImpl.c BinHexConverter.c Certificate.c Configuration.c DemoFOTAUpdateSelfTest.c DemoFOTAUpdateWorkflow.c DemoFOTAUpdateWorkflowFilePersistence.c DynamicDatagramPoolImpl.c JSONProcessorImpl.c JSONTreeExtensions.c Main.c MbedTLSAWSIoTThingShadowStack.c MbedTLSClientImpl.c MQTTClientImpl.c MQTTPacketExtensions.c PrivateKey.c SafeMemoryCopy.c SinglePartitionAWSIoTThingShadowDataPlane.c SinglePartitionMbedTLSAWSIoTThingShadowWiring.c SocketHelper.c StringHelper.c $(wildcard $(EXT_SRCDIR_DemoProduct_0)/*.c) $(wildcard $(EXT_SRCDIR_DemoProduct_1)/*.c)
 
-ALL_OBJS_DemoProduct = $(patsubst %.c,$(OBJODIR)/%.o,$(notdir $(ALL_SRCS_DemoProduct)))
+ALL_OBJS_DemoProduct = $(addsuffix .o,$(call replaceDir,$(OBJODIR),$(ALL_SRCS_DemoProduct)))
 
 #  
 # End DemoProduct Executable
@@ -133,24 +135,26 @@ $(OBJODIR):
 	$(Q) mkdir -p $@
 
 define CompileSources
-$$(patsubst %.c,$(OBJODIR)/%.o,$$(notdir $(1))): $(1) $$(ALL_INCS_$(2)) Makefile | $(OBJODIR)
-	$(vecho) "CC $$<"
-	$(Q) $(CC) $$(ALL_CFLAGS_$(2)) $$(ALL_INCDIR_FLAGS_$(2)) -c -o $$@ $$<
+$$(OBJODIR)/%.c.o: $(1)/%.c $$(ALL_INCS_$(2)) Makefile | $$(OBJODIR)
+	$$(vecho) "CC $$<"
+	$$(Q) $$(CC) $$(ALL_CFLAGS_$(2)) $$(ALL_INCDIR_FLAGS_$(2)) -c -o $$@ $$<
 endef
-$(foreach asrc, $(sort $(ALL_SRCS_DemoProduct)), $(eval $(call CompileSources,$(asrc),DemoProduct)))
+$(foreach sdir, $(call parentDirs,$(ALL_SRCS_DemoProduct)), $(eval $(call CompileSources,$(sdir),DemoProduct)))
 
-ifeq ($(BUILDABLE_DemoProduct),true)
 $(BINODIR): 
 	$(Q) mkdir -p $@
 
-$(BINODIR)/$(EXAFKT_DemoProduct)$(EXEXT_DemoProduct): $(ALL_OBJS_DemoProduct) $(ALL_LIBS_DemoProduct) | $(BINODIR)
-	$(vecho) "LD $(notdir $@)"
-	$(Q) $(LD) $(LDFLAGS) -o $@ $(filter %.o,$^) $(ALL_LIBDIR_FLAGS_DemoProduct) $(ALL_LIB_FLAGS_DemoProduct)
+define LinkObjectsToExecutable
+ifeq ($$(BUILDABLE_$(1)),true)
+$$(BINODIR)/$$(EXAFKT_$(1))$$(EXEXT_$(1)): $$(ALL_OBJS_$(1)) $$(ALL_LIBS_$(1)) | $$(BINODIR)
+	$$(vecho) "LD $$(notdir $$@)"
+	$$(Q) $$(LD) $$(LDFLAGS) -o $$@ $$(filter %.o,$$^) $$(ALL_LIBDIR_FLAGS_$(1)) $$(ALL_LIB_FLAGS_$(1))
 else
-$(BINODIR)/$(EXAFKT_DemoProduct)$(EXEXT_DemoProduct): 
-	$(vecho) "Cannot build $(if $(TARGET_SPECIFIC_DemoProduct),$(SUPPORTED_TARGETS_DemoProduct)-specific ,)'$(EXAFKT_DemoProduct)' application$(if $(and $(TARGET_SPECIFIC_DemoProduct),$(MATCHES_TARGET_DemoProduct)),, for $(TARGET))$(if $(and $(filter-out $(TARGET),$(HOST)),$(MATCHES_TARGET_DemoProduct)), under $(HOST),)."
+$$(BINODIR)/$$(EXAFKT_$(1))$$(EXEXT_$(1)): 
+	$$(vecho) "Cannot build $$(if $$(TARGET_SPECIFIC_$(1)),$$(SUPPORTED_TARGETS_$(1))-specific ,)'$$(EXAFKT_$(1))' application$$(if $$(and $$(TARGET_SPECIFIC_$(1)),$$(MATCHES_TARGET_$(1))),, for $$(TARGET))$$(if $$(and $$(filter-out $$(TARGET),$$(HOST)),$$(MATCHES_TARGET_$(1))), under $$(HOST),)."
 endif
-
+endef
+$(eval $(call LinkObjectsToExecutable,DemoProduct))
 TOOLS_BINDIR ?= $(PREFIX)/tools/bin
 
 define MakeFileContentModule

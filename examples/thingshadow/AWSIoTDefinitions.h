@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include <stdbool.h>
 #include "Datagram.h"
 #include "AWSCredentialsDefinitions.h"
+#include "IoTDefinitions.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,14 +36,6 @@ extern "C" {
 #define AWS_IOT_WEBSOCKET_PROTOCOL_NAME "mqtt"
 
 #define AWS_IOT_WEBSOCKET_PATH "/mqtt"
-
-#define MAX_AWS_MQTT_KEEP_ALIVE_VALUE 1180
-
-#define AWS_MQTT_KEEP_ALIVE_VALUE_SCALE 1.2f
-
-#define MAX_AWS_MQTT_KEEP_ALIVE_TIMEOUT_VALUE 5
-
-#define MAX_AWS_IOT_THING_NAME_LENGTH 36
 
 #define AWS_IOT_THING_SHADOW_JSON_STATE "state"
 
@@ -92,63 +85,11 @@ extern "C" {
 
 #define AWS_IOT_THING_SHADOW_REST_PATH_PATTERN "/things/%s/shadow"
 
-#define MAX_AWS_IOT_THING_SHADOW_TOPIC_NAME_LENGTH (MAX_AWS_IOT_THING_NAME_LENGTH + AWS_IOT_THING_SHADOW_TOPIC_UPDATE_LENGTH + AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED_LENGTH)
+#define MAX_AWS_IOT_THING_SHADOW_TOPIC_NAME_LENGTH (IOT_MAX_DEVICE_NAME_LENGTH + AWS_IOT_THING_SHADOW_TOPIC_UPDATE_LENGTH + AWS_IOT_THING_SHADOW_SUBTOPIC_ACCEPTED_LENGTH)
 
 #define MAX_AWS_IOT_THING_SHADOW_HANDLER_COUNT 1
 
 #define AWS_IOT_THING_SHADOW_SUBTOPICS_COUNT 5
-
-enum AWSIoTThingShadowAction {
-  AWS_IOT_THING_SHADOW_ACTION_GET,
-  AWS_IOT_THING_SHADOW_ACTION_UPDATE,
-  AWS_IOT_THING_SHADOW_ACTION_DELETE,
-  AWS_IOT_THING_SHADOW_ACTION_INTERNAL
-};
-typedef enum AWSIoTThingShadowAction AWSIoTThingShadowAction_t;
-
-enum AWSIoTThingShadowAckStatus {
-  AWS_IOT_THING_SHADOW_ACK_STATUS_TIMEOUT,
-  AWS_IOT_THING_SHADOW_ACK_STATUS_REJECTED,
-  AWS_IOT_THING_SHADOW_ACK_STATUS_ACCEPTED,
-  AWS_IOT_THING_SHADOW_ACK_STATUS_NONE
-};
-typedef enum AWSIoTThingShadowAckStatus AWSIoTThingShadowAckStatus_t;
-
-enum AWSIoTThingShadowSubTopicKind {
-  AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_NONE,
-  AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_ACCEPTED,
-  AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_REJECTED,
-  AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_DOCUMENTS,
-  AWS_IOT_THING_SHADOW_SUBTOPIC_KIND_DELTA
-};
-typedef enum AWSIoTThingShadowSubTopicKind AWSIoTThingShadowSubTopicKind_t;
-
-enum AWSIoTQoS {
-  AWS_IOT_QOS_0,
-  AWS_IOT_QOS_1
-};
-typedef enum AWSIoTQoS AWSIoTQoS_t;
-
-enum AWSIoTError {
-  AWS_IOT_ERROR_OUT_OF_MEMORY,
-  AWS_IOT_ERROR_MQTT_CONNECTION,
-  AWS_IOT_ERROR_MQTT_DISCONNECTED,
-  AWS_IOT_ERROR_MQTT_THING_SHADOW_TOPIC_SUBSCRIPTION,
-  AWS_IOT_ERROR_MQTT_CONNECTION_PARAMETERS,
-  AWS_IOT_ERROR_SESSION_DATA_DELETED,
-  AWS_IOT_ERROR_NET_CONNECT_FAILED,
-  AWS_IOT_ERROR_FETCHING_CREDENTIAL_FAILED
-};
-typedef enum AWSIoTError AWSIoTError_t;
-
-struct AWSIoTConnectionParameters {
-  char *thingName;
-  AWSIoTQoS_t qos;
-  uint8_t timeout;
-  void *pDownstreamConnParams;
-  AWSTemporarySecurityCredentials_t *pCredentials;
-};
-typedef struct AWSIoTConnectionParameters AWSIoTConnectionParameters_t;
 
 #ifdef __cplusplus
 } /* extern "C" */

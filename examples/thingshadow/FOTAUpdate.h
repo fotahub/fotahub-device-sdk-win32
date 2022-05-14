@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -30,9 +30,9 @@ extern "C" {
 struct IFOTAUpdateEngine__idata {
   void *__instance;
   bool ((*(downloadUpdate))(FirmwareUpdateInfo_t *,void *));
-  bool ((*(activateUpdate))(FirmwareUpdateInfo_t *,void *));
+  bool ((*(applyUpdate))(FirmwareUpdateInfo_t *,void *));
   bool ((*(confirmUpdate))(FirmwareUpdateInfo_t *,void *));
-  bool ((*(revertUpdate))(FirmwareUpdateInfo_t *,void *));
+  bool ((*(rollBackUpdate))(FirmwareUpdateInfo_t *,void *));
 };
 typedef struct IFOTAUpdateEngine__idata IFOTAUpdateEngine__idata_t;
 
@@ -55,9 +55,9 @@ struct IFirmwareUpdateHandler__idata {
   const void* ((*(beginWriteUpdate))(FirmwareUpdateInfo_t const *,size_t,void *));
   size_t ((*(writeUpdateChunk))(const void*,uint8_t const  *,size_t,void *));
   bool ((*(endWriteUpdate))(const void*,void *));
-  bool ((*(activateUpdate))(FirmwareUpdateInfo_t const *,void *));
+  bool ((*(applyUpdate))(FirmwareUpdateInfo_t const *,void *));
   bool ((*(confirmUpdate))(FirmwareUpdateInfo_t const *,void *));
-  bool ((*(revertUpdate))(FirmwareUpdateInfo_t const *,void *));
+  bool ((*(rollBackUpdate))(FirmwareUpdateInfo_t const *,void *));
   FOTAUpdateStatus_t ((*(getUpdateStatus))(FirmwareUpdateInfo_t const *,void *));
 };
 typedef struct IFirmwareUpdateHandler__idata IFirmwareUpdateHandler__idata_t;

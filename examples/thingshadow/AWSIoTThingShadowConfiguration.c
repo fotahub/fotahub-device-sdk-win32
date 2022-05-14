@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -45,16 +45,16 @@ MQTTConnectionParameters_t mqttParams =
   .userName = NULL, 
   .password = NULL, 
   .isCleanSession = true, 
-  .keepAliveInterval = MAX_AWS_MQTT_KEEP_ALIVE_VALUE, 
-  .keepAliveIntervalScale = ((float)(AWS_MQTT_KEEP_ALIVE_VALUE_SCALE)), 
-  .keepAliveTimeoutInterval = MAX_AWS_MQTT_KEEP_ALIVE_TIMEOUT_VALUE, 
+  .keepAliveInterval = MQTT_MAX_KEEP_ALIVE_VALUE, 
+  .keepAliveIntervalScale = ((float)(MQTT_KEEP_ALIVE_VALUE_SCALE)), 
+  .keepAliveTimeoutInterval = MQTT_MAX_KEEP_ALIVE_TIMEOUT_VALUE, 
   .pSocketConnectionParams = &socketParams
 };
 
-AWSIoTConnectionParameters_t awsIoTConnParams = 
+IoTConnectionParameters_t awsIoTConnParams = 
 {
-  .thingName = "<Your AWS IoT thing name>", 
-  .qos = AWS_IOT_QOS_0, 
+  .deviceName = "FotaHubExampleThing", 
+  .qos = IOT_QOS_0, 
   .timeout = 12, 
   .pDownstreamConnParams = &mqttParams
 };

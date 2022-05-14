@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ size_t updateStatusEncoderFunc(uint32_t value, char *msg, size_t msgLength)
       valueString = AWS_IOT_THING_SHADOW_JSON_ATTRIBUTE_VALUE_UPDATE_STATUS_NONE;
       break;
     }
-    case FOTA_UPDATE_STATUS_ACTIVATION_SUCCEEDED:
+    case FOTA_UPDATE_STATUS_APPLICATION_SUCCEEDED:
     {
       valueString = AWS_IOT_THING_SHADOW_JSON_ATTRIBUTE_VALUE_UPDATE_STATUS_SUCCEEDED;
       break;
@@ -103,11 +103,11 @@ uint32_t updateStatusDecoderFunc(char const *msg, size_t msgLength)
   }
   if (strncmp(msg, AWS_IOT_THING_SHADOW_JSON_ATTRIBUTE_VALUE_UPDATE_STATUS_SUCCEEDED, msgLength) == 0) 
   {
-    return FOTA_UPDATE_STATUS_ACTIVATION_SUCCEEDED;
+    return FOTA_UPDATE_STATUS_APPLICATION_SUCCEEDED;
   }
   if (strncmp(msg, AWS_IOT_THING_SHADOW_JSON_ATTRIBUTE_VALUE_UPDATE_STATUS_FAILED, msgLength) == 0) 
   {
-    return FOTA_UPDATE_STATUS_ACTIVATION_FAILED;
+    return FOTA_UPDATE_STATUS_APPLICATION_FAILED;
   }
   return 0;
 }

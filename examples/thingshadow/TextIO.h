@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -38,9 +38,9 @@ struct ITextWriter__idata {
 };
 typedef struct ITextWriter__idata ITextWriter__idata_t;
 
-typedef size_t ((*(EnumTextEncoderFunc))(uint32_t,char *,size_t));
+typedef size_t ((*(textIoEnumTextEncoderFunc))(uint32_t,char *,size_t));
 
-typedef uint32_t ((*(EnumTextDecoderFunc))(char const *,size_t));
+typedef uint32_t ((*(textIoEnumTextDecoderFunc))(char const *,size_t));
 
 struct IDataTextEncoder__idata {
   void *__instance;
@@ -49,9 +49,9 @@ struct IDataTextEncoder__idata {
 };
 typedef struct IDataTextEncoder__idata IDataTextEncoder__idata_t;
 
-typedef size_t ((*(DataTextEncoderFunc))(void const *,size_t,char *,size_t));
+typedef size_t ((*(textIoDataTextEncoderFunc))(void const *,size_t,char *,size_t));
 
-typedef size_t ((*(DataTextDecoderFunc))(char const *,size_t,void *,size_t));
+typedef size_t ((*(textIoDataTextDecoderFunc))(char const *,size_t,void *,size_t));
 
 #ifdef __cplusplus
 } /* extern "C" */

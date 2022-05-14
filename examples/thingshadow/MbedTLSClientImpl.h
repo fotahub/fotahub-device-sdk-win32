@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ extern "C" {
 
 #define MAX_SOCKET_CONNECTION_COUNT 3
 
-#define DEFAULT_READ_TIMEOUT 5000
+#define DEFAULT_READ_TIMEOUT 10
 
 struct MbedTLSEventFlags {
   uint8_t connected:1;

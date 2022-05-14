@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -27,13 +27,13 @@
 extern "C" {
 #endif
 
-#define SIMULATED_ACTIVATION_SUCCESS_RATE 70
+#define SIMULATED_APPLYING_SUCCESS_RATE 70
 
 void fotaUpdateSelfTest_init(void);
 
-void validateFirmwareUpdateActivation(void);
+void validateFirmwareUpdateApplying(void);
 
-void validateFirmwareUpdateReversion(void);
+void validateFirmwareUpdateRollingback(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

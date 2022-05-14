@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-2021 FotaHub Inc. All rights reserved.
+ *  Copyright (C) 2022 FotaHub Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -223,9 +223,9 @@ static bool DemoFOTAUpdateWorkflowEngine__execute(DemoFOTAUpdateWorkflowEngine__
             DemoFOTAUpdateWorkflowEngine__states_t __targetState = DemoFOTAUpdateWorkflowEngine_restarting__state;
             
             /* 
-             * Persist FOTA update state and activate downloaded firmware update
+             * Persist FOTA update state and apply downloaded firmware update
              */
-            if (!fotahub_activateFirmwareUpdate(&instance->updateInfo)) 
+            if (!fotahub_applyFirmwareUpdate(&instance->updateInfo)) 
             {
               __targetState = DemoFOTAUpdateWorkflowEngine_connected__state;
               __transitionResult = false;

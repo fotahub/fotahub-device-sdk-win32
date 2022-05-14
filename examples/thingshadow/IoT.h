@@ -15,46 +15,41 @@
  *
  *  This file is part of the FotaHub(R) Device SDK program (https://fotahub.com)
  */
-#ifndef MQTT_H
-#define MQTT_H
+#ifndef IOT_H
+#define IOT_H
 
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "Datagram.h"
-#include "MQTTDefinitions.h"
+#include "IoTDefinitions.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* 
- * FIXME Why do we need the newDatagram() operation?
+ * TODO Add newJSONDocument()/deleteJSONDocument methods that allocate, return and act upon a datagram payload
  */
-struct IMQTTClient__idata {
+struct IIoTClient__idata {
   void *__instance;
-  const void* ((*(connect))(MQTTConnectionParameters_t *,void *,void *));
-  bool ((*(isConnected))(const void*,void *));
+  const void* ((*(connect))(IoTConnectionParameters_t *,void *,void *));
   void *((*(getUserData))(const void*,void *));
-  Datagram_t *((*(newDatagram))(const void*,size_t,DatagramType_t,void *));
-  Datagram_t *((*(newPublishMessage))(const void*,size_t,void *));
-  bool ((*(subscribe))(const void*,char *[],MQTTQoS_t [],uint64_t const ,uint16_t,bool,void *));
-  bool ((*(sendPublishMessage))(const void*,char *,Datagram_t *,MQTTPublishParameters_t *,void *));
-  void ((*(deleteDatagram))(const void*,Datagram_t *,void *));
+  bool ((*(isConnected))(const void*,void *));
+  bool ((*(report))(const void*,char *,void *));
+  bool ((*(get))(const void*,void *));
   void ((*(disconnect))(const void*,void *));
 };
-typedef struct IMQTTClient__idata IMQTTClient__idata_t;
+typedef struct IIoTClient__idata IIoTClient__idata_t;
 
-struct IMQTTClientHandler__idata {
+struct IIoTClientHandler__idata {
   void *__instance;
   void ((*(connected))(const void*,void *));
-  void ((*(subscribed))(const void*,uint16_t,MQTTQoS_t [],void *));
-  void ((*(published))(const void*,void *));
-  void ((*(publishMessageReceived))(const void*,char *,size_t,Datagram_t *,void *));
+  void ((*(status))(const void*,char const *,IoTAction_t,IoTResponseStatus_t,char *,size_t,void *));
+  void ((*(desired))(const void*,char const *,char *,size_t,void *));
   void ((*(disconnected))(const void*,void *));
-  void ((*(connectionError))(const void*,MQTTError_t,void *));
+  void ((*(connectionError))(const void*,IoTError_t,void *));
 };
-typedef struct IMQTTClientHandler__idata IMQTTClientHandler__idata_t;
+typedef struct IIoTClientHandler__idata IIoTClientHandler__idata_t;
 
 #ifdef __cplusplus
 } /* extern "C" */
