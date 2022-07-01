@@ -132,7 +132,7 @@ bool JSONProcessorImpl_jsonSerializer_serialize(struct jsontree_value *pDocument
   return true;
 }
 
-const void* JSONProcessorImpl_jsonSerializer_beginDocument(struct jsontree_value *pDocumentModel, IJSONDocumentIOHandler__idata_t *documentIOHandler, void *pUserData, char *msg, size_t msgSize, void *___id)
+void const* JSONProcessorImpl_jsonSerializer_beginDocument(struct jsontree_value *pDocumentModel, IJSONDocumentIOHandler__idata_t *documentIOHandler, void *pUserData, char *msg, size_t msgSize, void *___id)
 {
   JSONProcessorImpl__cdata_t *___cid = ((JSONProcessorImpl__cdata_t *) ___id);
   if (msg == NULL) 
@@ -152,7 +152,7 @@ const void* JSONProcessorImpl_jsonSerializer_beginDocument(struct jsontree_value
   return pSerializeCtx;
 }
 
-bool JSONProcessorImpl_jsonSerializer_beginObject(const void* hDocument, char const *path, void *___id)
+bool JSONProcessorImpl_jsonSerializer_beginObject(void const* hDocument, char const *path, void *___id)
 {
   JSONProcessorImpl__cdata_t *___cid = ((JSONProcessorImpl__cdata_t *) ___id);
   if (hDocument == NULL) 
@@ -171,7 +171,7 @@ bool JSONProcessorImpl_jsonSerializer_beginObject(const void* hDocument, char co
   return true;
 }
 
-bool JSONProcessorImpl_jsonSerializer_addValue(const void* hDocument, char const *path, JSONObjectSerializationMode_t mode, void *___id)
+bool JSONProcessorImpl_jsonSerializer_addValue(void const* hDocument, char const *path, JSONObjectSerializationMode_t mode, void *___id)
 {
   JSONProcessorImpl__cdata_t *___cid = ((JSONProcessorImpl__cdata_t *) ___id);
   if (hDocument == NULL) 
@@ -195,7 +195,7 @@ bool JSONProcessorImpl_jsonSerializer_addValue(const void* hDocument, char const
   return true;
 }
 
-bool JSONProcessorImpl_jsonSerializer_endObject(const void* hDocument, void *___id)
+bool JSONProcessorImpl_jsonSerializer_endObject(void const* hDocument, void *___id)
 {
   JSONProcessorImpl__cdata_t *___cid = ((JSONProcessorImpl__cdata_t *) ___id);
   if (hDocument == NULL) 
@@ -214,7 +214,7 @@ bool JSONProcessorImpl_jsonSerializer_endObject(const void* hDocument, void *___
   return true;
 }
 
-bool JSONProcessorImpl_jsonSerializer_endDocument(const void* hDocument, void *___id)
+bool JSONProcessorImpl_jsonSerializer_endDocument(void const* hDocument, void *___id)
 {
   JSONProcessorImpl__cdata_t *___cid = ((JSONProcessorImpl__cdata_t *) ___id);
   if (hDocument == NULL) 

@@ -112,7 +112,7 @@ void MbedTLSClientImpl_deleteMbedTLSNetwork(MbedTLSNetwork_t *pNetwork, bool clo
   MbedTLSClientImpl_resetMbedTLSNetworkExtendedData(pNetwork, ___cid);
 }
 
-const void* MbedTLSClientImpl_socket_connect(SocketConnectionParameters_t *pConnParams, void *pUserData, void *___id)
+void const* MbedTLSClientImpl_socket_connect(SocketConnectionParameters_t *pConnParams, void *pUserData, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   if (pConnParams == NULL) 
@@ -317,7 +317,7 @@ const void* MbedTLSClientImpl_socket_connect(SocketConnectionParameters_t *pConn
   return pNetwork;
 }
 
-bool MbedTLSClientImpl_socket_isConnected(const void* hSession, void *___id)
+bool MbedTLSClientImpl_socket_isConnected(void const* hSession, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   MbedTLSNetwork_t *pNetwork = ((MbedTLSNetwork_t *) hSession);
@@ -336,7 +336,7 @@ bool MbedTLSClientImpl_socket_isConnected(const void* hSession, void *___id)
   return false;
 }
 
-void *MbedTLSClientImpl_socket_getUserData(const void* hSession, void *___id)
+void *MbedTLSClientImpl_socket_getUserData(void const* hSession, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   MbedTLSNetwork_t *pNetwork = ((MbedTLSNetwork_t *) hSession);
@@ -348,19 +348,19 @@ void *MbedTLSClientImpl_socket_getUserData(const void* hSession, void *___id)
   return pNetwork->pUserData;
 }
 
-Datagram_t *MbedTLSClientImpl_socket_newDatagram(const void* hSession, size_t payloadLength, DatagramType_t type, void *___id)
+Datagram_t *MbedTLSClientImpl_socket_newDatagram(void const* hSession, size_t payloadLength, DatagramType_t type, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   return (*___cid->datagramPool__ops->newDatagram)(payloadLength, ___cid->datagramPool__ops->__instance);
 }
 
-Datagram_t *MbedTLSClientImpl_socket_resizeDatagram(const void* hSession, Datagram_t *pDatagram, size_t newSize, void *___id)
+Datagram_t *MbedTLSClientImpl_socket_resizeDatagram(void const* hSession, Datagram_t *pDatagram, size_t newSize, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   return (*___cid->datagramPool__ops->resizeDatagram)(pDatagram, newSize, ___cid->datagramPool__ops->__instance);
 }
 
-void MbedTLSClientImpl_socket_sendDatagram(const void* hSession, Datagram_t *pDatagram, SocketFrameOptions_t *pOptions, void *___id)
+void MbedTLSClientImpl_socket_sendDatagram(void const* hSession, Datagram_t *pDatagram, SocketFrameOptions_t *pOptions, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   MbedTLSNetwork_t *pNetwork = ((MbedTLSNetwork_t *) hSession);
@@ -420,13 +420,13 @@ void MbedTLSClientImpl_socket_sendDatagram(const void* hSession, Datagram_t *pDa
   }
 }
 
-void MbedTLSClientImpl_socket_deleteDatagram(const void* hSession, Datagram_t *pDatagram, void *___id)
+void MbedTLSClientImpl_socket_deleteDatagram(void const* hSession, Datagram_t *pDatagram, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   (*___cid->datagramPool__ops->deleteDatagram)(pDatagram, ___cid->datagramPool__ops->__instance);
 }
 
-void MbedTLSClientImpl_socket_disconnect(const void* hSession, void *___id)
+void MbedTLSClientImpl_socket_disconnect(void const* hSession, void *___id)
 {
   MbedTLSClientImpl__cdata_t *___cid = ((MbedTLSClientImpl__cdata_t *) ___id);
   MbedTLSNetwork_t *pNetwork = ((MbedTLSNetwork_t *) hSession);

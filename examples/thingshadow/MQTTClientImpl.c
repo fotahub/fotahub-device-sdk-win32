@@ -104,7 +104,7 @@ void MQTTClientImpl_deleteMQTTSessionData(MQTTSessionData_t *pSessionData, void 
   pSessionData->busy = false;
 }
 
-const void* MQTTClientImpl_mqttClient_connect(MQTTConnectionParameters_t *pConnParams, void *pUserData, void *___id)
+void const* MQTTClientImpl_mqttClient_connect(MQTTConnectionParameters_t *pConnParams, void *pUserData, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   if (pConnParams == NULL) 
@@ -158,7 +158,7 @@ const void* MQTTClientImpl_mqttClient_connect(MQTTConnectionParameters_t *pConnP
   return pSessionData;
 }
 
-bool MQTTClientImpl_mqttClient_isConnected(const void* hSession, void *___id)
+bool MQTTClientImpl_mqttClient_isConnected(void const* hSession, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *) hSession);
@@ -169,7 +169,7 @@ bool MQTTClientImpl_mqttClient_isConnected(const void* hSession, void *___id)
   return pSessionData->connected && (*___cid->socket__ops->isConnected)(pSessionData->hSocketSession, ___cid->socket__ops->__instance);
 }
 
-bool MQTTClientImpl_mqttClient_subscribe(const void* hSession, char *topicList[], MQTTQoS_t qosList[], uint64_t const  topicCount, uint16_t subMsgId, bool duplicatedMsg, void *___id)
+bool MQTTClientImpl_mqttClient_subscribe(void const* hSession, char *topicList[], MQTTQoS_t qosList[], uint64_t const  topicCount, uint16_t subMsgId, bool duplicatedMsg, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *) hSession);
@@ -213,7 +213,7 @@ bool MQTTClientImpl_mqttClient_subscribe(const void* hSession, char *topicList[]
   return true;
 }
 
-Datagram_t *MQTTClientImpl_mqttClient_newPublishMessage(const void* hSession, size_t payloadLength, void *___id)
+Datagram_t *MQTTClientImpl_mqttClient_newPublishMessage(void const* hSession, size_t payloadLength, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   Datagram_t *pDatagram = (*___cid->socket__ops->newDatagram)(NULL, MAX_PUBLISH_HEADER_LENGTH + payloadLength, PROTOCOL_SPECIFIC, ___cid->socket__ops->__instance);
@@ -226,7 +226,7 @@ Datagram_t *MQTTClientImpl_mqttClient_newPublishMessage(const void* hSession, si
   return pDatagram;
 }
 
-bool MQTTClientImpl_mqttClient_sendPublishMessage(const void* hSession, char *topicName, Datagram_t *pMessage, MQTTPublishParameters_t *pParams, void *___id)
+bool MQTTClientImpl_mqttClient_sendPublishMessage(void const* hSession, char *topicName, Datagram_t *pMessage, MQTTPublishParameters_t *pParams, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *) hSession);
@@ -271,7 +271,7 @@ bool MQTTClientImpl_mqttClient_sendPublishMessage(const void* hSession, char *to
   return true;
 }
 
-void MQTTClientImpl_mqttClient_disconnect(const void* hSession, void *___id)
+void MQTTClientImpl_mqttClient_disconnect(void const* hSession, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *) hSession);
@@ -286,7 +286,7 @@ void MQTTClientImpl_mqttClient_disconnect(const void* hSession, void *___id)
   (*___cid->socket__ops->disconnect)(pSessionData->hSocketSession, ___cid->socket__ops->__instance);
 }
 
-void *MQTTClientImpl_mqttClient_getUserData(const void* hSession, void *___id)
+void *MQTTClientImpl_mqttClient_getUserData(void const* hSession, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *) hSession);
@@ -298,7 +298,7 @@ void *MQTTClientImpl_mqttClient_getUserData(const void* hSession, void *___id)
   return pSessionData->pUserData;
 }
 
-void MQTTClientImpl_clientSocketHandler_connected(const void* hSession, void *___id)
+void MQTTClientImpl_clientSocketHandler_connected(void const* hSession, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *)((*___cid->socket__ops->getUserData)(hSession, ___cid->socket__ops->__instance)));
@@ -313,7 +313,7 @@ void MQTTClientImpl_clientSocketHandler_connected(const void* hSession, void *__
   pSessionData->pConnDatagram = NULL;
 }
 
-void MQTTClientImpl_clientSocketHandler_datagramSent(const void* hSession, void *___id)
+void MQTTClientImpl_clientSocketHandler_datagramSent(void const* hSession, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   if (___cid->keepAliveTimer__ops != NULL) 
@@ -327,7 +327,7 @@ void MQTTClientImpl_clientSocketHandler_datagramSent(const void* hSession, void 
   }
 }
 
-void MQTTClientImpl_clientSocketHandler_datagramReceived(const void* hSession, Datagram_t *pDatagram, void *___id)
+void MQTTClientImpl_clientSocketHandler_datagramReceived(void const* hSession, Datagram_t *pDatagram, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *)((*___cid->socket__ops->getUserData)(hSession, ___cid->socket__ops->__instance)));
@@ -450,7 +450,7 @@ void MQTTClientImpl_clientSocketHandler_datagramReceived(const void* hSession, D
   }
 }
 
-void MQTTClientImpl_clientSocketHandler_disconnected(const void* hSession, void *___id)
+void MQTTClientImpl_clientSocketHandler_disconnected(void const* hSession, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *)((*___cid->socket__ops->getUserData)(hSession, ___cid->socket__ops->__instance)));
@@ -478,7 +478,7 @@ void MQTTClientImpl_clientSocketHandler_disconnected(const void* hSession, void 
   MQTTClientImpl_deleteMQTTSessionData(pSessionData, ___cid);
 }
 
-void MQTTClientImpl_clientSocketHandler_connectionError(const void* hSession, SocketError_t error, void *___id)
+void MQTTClientImpl_clientSocketHandler_connectionError(void const* hSession, SocketError_t error, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   MQTTSessionData_t *pSessionData = ((MQTTSessionData_t *)((*___cid->socket__ops->getUserData)(hSession, ___cid->socket__ops->__instance)));
@@ -513,13 +513,13 @@ void MQTTClientImpl_clientSocketHandler_connectionError(const void* hSession, So
   }
 }
 
-void MQTTClientImpl_mqttClient_deleteDatagram(const void* hSession, Datagram_t *pDatagram, void *___id)
+void MQTTClientImpl_mqttClient_deleteDatagram(void const* hSession, Datagram_t *pDatagram, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   (*___cid->socket__ops->deleteDatagram)(hSession, pDatagram, ___cid->socket__ops->__instance);
 }
 
-Datagram_t *MQTTClientImpl_mqttClient_newDatagram(const void* hSession, size_t payloadLength, DatagramType_t type, void *___id)
+Datagram_t *MQTTClientImpl_mqttClient_newDatagram(void const* hSession, size_t payloadLength, DatagramType_t type, void *___id)
 {
   MQTTClientImpl__cdata_t *___cid = ((MQTTClientImpl__cdata_t *) ___id);
   return (*___cid->socket__ops->newDatagram)(hSession, payloadLength, type, ___cid->socket__ops->__instance);
