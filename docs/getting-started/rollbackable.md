@@ -14,4 +14,4 @@ For obvious reasons, the ultimately required self test logic depends heavily on 
 
 2. In the very last step, you will observe the same result and a very similar terminal output as with the *Simple* example in case the built-in self test succeeds. Otherwise, you will see that the new fimware version initiates the reversion of the firmware update and exits, and how the previous firmware version resumes right after:
 
-![](rollbackable-1.png "Reversion to previous firmware version") 
+    ![](rollbackable-1.png "Reversion to previous firmware version") 
