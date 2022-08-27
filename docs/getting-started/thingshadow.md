@@ -152,7 +152,7 @@ If not yet done so, either clone or download and uncompress the [FotaHub Device 
    
     ![](thingshadow-1.png "Launch of initial firmware version") 
 
-1. Go back to the [AWS IoT Console](https://console.aws.amazon.com/iot/home) and visit the unnamed classic shadow of your AWS IoT thing (`Manage` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` when using the *New console experience* which can be activated all down in the left side bar). Click on the refresh button if no such is displayed. You should see that it yields a shadow state document with a `currentVersion` attribute that indicates the currently running firmware version on your device:
+1. Go back to the [AWS IoT Console](https://console.aws.amazon.com/iot/home) and visit the unnamed classic shadow of your AWS IoT thing (`Manage` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` when using the *New console experience* which can be activated all down in the left side bar). Click on the refresh button if no such is displayed yet. You should see that it yields a shadow state document with a `currentVersion` attribute that indicates the currently running firmware version on your device:
 
     ![](thingshadow-2.png "Initial thing shadow state")
 
@@ -183,8 +183,8 @@ You are now ready to perfom a cloud-triggered firmare over-the-air update. You c
    
     ![](thingshadow-3.png "Thing shadow state after successful FOTA update")
 
-    In case the built-in self test fails, the new fimware version initiates the reversion of the firmware update and exits. The previous firmware version is resumed right after. You can see that
-    * in the **terminal output** of the firmware program - it should show a banner with the product name and the new firmware version followed by some messages wrt the validation and the reversion of the same, and then another banner with the product name and the initial firmware version
+    In case the built-in self test fails, the new fimware version initiates a rollback of the firmware update and exits. The previous firmware version is resumed right after. You can see that
+    * in the **terminal output** of the firmware program - it should show a banner with the product name and the new firmware version followed by some messages wrt the validation and the rollback of the same, and then another banner with the product name and the initial firmware version
     * by inspecting the **shadow state document** in the AWS IoT Console - it should reflect the initial firmware version as the currently running version and include an `updateStatus` attribute indicating the failure of the firmware over-the-air update:
 
     ![](thingshadow-4.png "Thing shadow state after failed FOTA update")
@@ -223,8 +223,8 @@ You are now ready to perfom a cloud-triggered firmare over-the-air update. You c
     {"state":{"reported":{"currentVersion":"1.1","updateStatus":"succeeded"}},"metadata":{...},"version":...,"timestamp":...}
     ```
 
-    In case the built-in self test fails, the new fimware version initiates the reversion of the firmware update and exits. The previous firmware version is resumed right after. You can see that
-    * in the **terminal output** of the firmware program - it should show a banner with the product name and the new firmware version followed by some messages wrt the validation and the reversion of the same, and then another banner with the product name and the initial firmware version
+    In case the built-in self test fails, the new fimware version initiates a rollback of the firmware update and exits. The previous firmware version is resumed right after. You can see that
+    * in the **terminal output** of the firmware program - it should show a banner with the product name and the new firmware version followed by some messages wrt the validation and the rollback of the same, and then another banner with the product name and the initial firmware version
     * by inspecting the **shadow state document** retrieved as per above - it should reflect the initial firmware version as the currently running version and include an `updateStatus` attribute indicating the failure of the firmware over-the-air update:
 
     ```bat
