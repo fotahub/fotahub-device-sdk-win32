@@ -64,7 +64,7 @@ A description of the tools that must be available on your laptop or computer and
 
     A comprehensive guide explaining how to proceed in detail can be found [here](https://docs.aws.amazon.com/iot/latest/developerguide/create-iot-resources.html).
 
-3. Delete the initially created unnamed classic shadow of your AWS IoT thing (`Manage` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` > `Delete` when using the *New console experience* which can be activated all down in the left side bar).
+3. Delete the initially created unnamed classic shadow of your AWS IoT thing (`Manage` > `All devices` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` > `Delete` when using the *New console experience* which can be activated all down in the left side bar).
 
 ### Create a FotaHub product
 
@@ -92,7 +92,7 @@ If not yet done so, either clone or download and uncompress the [FotaHub Device 
     #define DEMO_PRODUCT_FIRMWARE_UPDATE_VERIFICATION_ALGORITHM FOTA_UPDATE_VERIFICATION_ALGORITHM_SHA256
     ```
 
-3. Open the `AWSIoTThingShadowConfiguration.c` file and initialize the `hostNameEndPoint.hostName` and `awsIoTConnParams.thingName` struct variable fields with your AWS account's [device data endpoint](https://docs.aws.amazon.com/iot/latest/developerguide/iot-connect-devices.html#iot-connect-device-endpoints) and the name of the previously created AWS IoT thing (see `Settings` > `Device data endpoint` and `Manage` > `Things` in the [AWS IoT Console](https://console.aws.amazon.com/iot/home) when using the *New console experience* which can be activated all down in the left side bar):
+3. Open the `AWSIoTThingShadowConfiguration.c` file and initialize the `hostNameEndPoint.hostName` and `awsIoTConnParams.thingName` struct variable fields with your AWS account's [device data endpoint](https://docs.aws.amazon.com/iot/latest/developerguide/iot-connect-devices.html#iot-connect-device-endpoints) and the name of the previously created AWS IoT thing (see `Settings` > `Device data endpoint` and `Manage` > `All devices` > `Things` in the [AWS IoT Console](https://console.aws.amazon.com/iot/home) when using the *New console experience* which can be activated all down in the left side bar):
 
     ```c
     HostNameEndpointAddress_t hostNameEndPoint = 
@@ -152,7 +152,7 @@ If not yet done so, either clone or download and uncompress the [FotaHub Device 
    
     ![](thingshadow-1.png "Launch of initial firmware version") 
 
-1. Go back to the [AWS IoT Console](https://console.aws.amazon.com/iot/home) and visit the unnamed classic shadow of your AWS IoT thing (`Manage` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` when using the *New console experience* which can be activated all down in the left side bar). Click on the refresh button if no such is displayed yet. You should see that it yields a shadow state document with a `currentVersion` attribute that indicates the currently running firmware version on your device:
+1. Go back to the [AWS IoT Console](https://console.aws.amazon.com/iot/home) and visit the unnamed classic shadow of your AWS IoT thing (`Manage` > `All devices` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` when using the *New console experience* which can be activated all down in the left side bar). Click on the refresh button if no such is displayed yet. You should see that it yields a shadow state document with a `currentVersion` attribute that indicates the currently running firmware version on your device:
 
     ![](thingshadow-2.png "Initial thing shadow state")
 
@@ -160,7 +160,7 @@ You are now ready to perfom a cloud-triggered firmare over-the-air update. You c
 
 #### Interactive firmare over-the-air update using the AWS IoT Console
 
-1. Go back to the [AWS IoT Console](https://console.aws.amazon.com/iot/home) and revisit the unnamed classic shadow of your AWS IoT thing (`Manage` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` when using the *New console experience* which can be activated all down in the left side bar). Open the shadow state document for editing (`Device Shadow document` > `Edit`). Add a `desired` object with a `newVersion` attribute to indicate the new firmware version your device should be updated to and a `verificationData` attribute with the checksum or signature of the same (see `Products` > `{{Your FotaHub product}}` > `Details` > `{{New firmware version}}` at [Fotahub](https://fotahub.com)):
+1. Go back to the [AWS IoT Console](https://console.aws.amazon.com/iot/home) and revisit the unnamed classic shadow of your AWS IoT thing (`Manage` > `All devices` > `Things` > `{{Your AWS IoT thing}}` > `Device Shadows` > `Classic Shadow` when using the *New console experience* which can be activated all down in the left side bar). Open the shadow state document for editing (`Device Shadow document` > `Edit`). Add a `desired` object with a `newVersion` attribute to indicate the new firmware version your device should be updated to and a `verificationData` attribute with the checksum or signature of the same (see `Products` > `{{Your FotaHub product}}` > `Details` > `{{New firmware version}}` at [Fotahub](https://fotahub.com)):
 
     ```json
     {
